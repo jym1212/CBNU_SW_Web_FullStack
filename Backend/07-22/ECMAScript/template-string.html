@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ECMAScript - 템플릿 문자열 문법 실습</h1>
+    <script>
+        //2024.07.22
+        //템플릿 문자열 문법
+        //문자열을 생성할 때 변수를 삽입할 수 있는 방법
+
+        const name = '강창훈';
+        const age = 50;
+        let address = '경기도 성남시 수정구...';
+
+        let introduction = '저를 소개합니다. 이름은 '+name+'이고, 나이는 '+age+'살이고, 사는 곳은 '+address+'입니다.';
+
+        console.log('올드한 방식은 문자열 변수 조합 : ', introduction);
+
+        //템플릿 문자열 문법으로 문자열 생성
+        //문자열 기본 템플릿은 벡틱 문자열 (역홀따옴표 - 키보드 맨 왼쪽 위에 있음, 숫자 1 키보드 옆에 있음)
+        //템플릿 문자열 문법은 문자열 내에 변수를 삽입할 수 있음.
+        let introduction2 = `저를 소개합니다. 이름은 ${name}이고, 나이는 ${age}살이고, 사는 곳은 ${address}입니다.`;
+        console.log('템플릿 문자열 기법을 이용한 변수/문자열 조합 :', introduction2);
+    </script>
+</body>
+</html>

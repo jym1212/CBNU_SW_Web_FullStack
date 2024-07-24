@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ECMAScript - 자바스크립트 객체 사용하기</h1>
+    <script>
+        //2024.07.22
+        //자바스크립트 객체 사용
+        //속성과 값으로 구성된 객체를 생성하고 사용
+
+        //예시 1) 기본적인 객체 구조 정의하고 사용
+        let noteBook = {
+            productId: "1",
+            productName: "LG Gram 17",
+            price: 1000,
+            brand: "LG전자"
+        };
+        console.log("노트북 정보 :", noteBook);
+
+        //객체는 메모리를 공유하여 사용하기 때문에 객체 내 속성값을 변경하면 다른 객체에도 영향을 미침.
+
+        //자바스크립트의 데이터 타입
+        //- 원시타입 : 문자열, 정수, string, integer, boolean, null, undefined
+        //- 참조타입 : 객체, 배열, 함수
+        noteBook.price = 3000;
+        console.log("노트북 정보 :", noteBook);
+
+        //자바스크립트 객체는 이미 한 번 정의된 객체 구조에 동적으로 속성 추가 가능
+        //동적 속성 추가 방법1 : 객체["신규 속석명"] = 값;
+        noteBook["stock"] = 200;
+        console.log("노트북 정보 :", noteBook);
+
+        //동적 속성 추가 방법2 : 객체명.신규속성명 = 값;
+        noteBook.spec = {
+            CPU: "i7",
+            memory: "16GB",
+            SDD: "512GB"
+        }
+        console.log("노트북 정보 :", noteBook);
+
+        var SalesCenter = "Center";
+        for(let i=0; i<10; i++){
+            noteBook[`${SalesCenter}-${i.toString()}`] = 20;
+        }
+        console.log("노트북 정보 :", noteBook);
+
+    </script>
+</body>
+</html>
