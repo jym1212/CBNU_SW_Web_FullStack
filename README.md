@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CBNU_SW_Web_FullStack
 ### 2024 여름방학 SW Full Stack AI 개발자 과정 몰입교육
 
@@ -25,3 +26,9 @@
 > 07.26 
 > - MVC 패턴 View 심화, Model 기초 (MySQL 설치 및 연동)
 > - Final project 중 Admin-app의 주요 Routing, View 구현
+=======
+# CBNU SW Web Full Stack AI 
+2024 여름방학 SW Full Stack AI 개발자 과정 몰입교육
+
+1주차(07.22 ~ 07.26) : Node Backend Basic
+>>>>>>> dae4dc7f30fc1a35a5dd2844a0ac23513ab4d58d
