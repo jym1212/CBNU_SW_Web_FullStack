@@ -12,6 +12,10 @@ var router = express.Router();
 - 응답 결과 : message/list.ejs 뷰파일 반환
 */
 router.get('/list', async (req, res) => {
+
+    //Step1 : DB 채팅 메세지 테이블에서 전체 채팅 메세지 정보 조회
+
+    //Step2 : DB에서 조회된 전체 채팅 메세지 정보를 뷰파일에 전달 후 반환
     res.render('message/list');
 });
 
