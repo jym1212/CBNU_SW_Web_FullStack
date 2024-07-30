@@ -5,13 +5,19 @@
 var express = require('express');
 var router = express.Router();
 
+
+//2024.07.30
+//ORM DB 객체 참조
+var db = require('../models/index.js');
+
+
 /*
 채팅 메세지 목록 웹페이지 요청과 응답 처리 라우팅 메소드
 - 호출 주소 : http://localhost:5001/message/list
 - 호출 방식 : Get 방식
-- 응답 결과 : message/list.ejs 뷰파일 반환
+- 응답 결과 : 채팅 메세지 목록 웹페이지 반환
 */
-router.get('/list', async (req, res) => {
+router.get('/list', async (req, res, next) => {
 
     //Step1 : DB 채팅 메세지 테이블에서 전체 채팅 메세지 정보 조회
 

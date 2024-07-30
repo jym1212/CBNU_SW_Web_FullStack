@@ -4,10 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//2024.07.30
+//환경 설정 파일 구성
+require('dotenv').config();
+
 
 //2024.07.26
 //레이아웃 노드 패키지 참조
 var expressLayouts = require('express-ejs-layouts');
+
+//2024.07.30
+//ORM Model 영역의 sequelize(DB 연결 객체) 속성 참조
+var sequelize = require('./models/index.js').sequelize;
 
 
 //2024.07.26
@@ -23,6 +31,10 @@ var messageRouter = require('./routes/message');  //채팅 메세지 관리 라�
 
 
 var app = express();
+
+
+//MySQL과 자동 연결 처리, 모델 기반 물리 테이블 생성 처리 제공
+sequelize.sync();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
