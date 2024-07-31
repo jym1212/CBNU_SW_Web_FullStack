@@ -37,3 +37,8 @@
     - Final project 중 Admin-app의 Model 구현, 주요 기능 추가
     - 환경 설정 정보 구성 및 활용 (dotenv)
     - 단방향 암호화 (bcrypt), 양방향 암호화 (mysql-aes)
+
+- 07.31
+    - Socket IO 패키지 사용하여 실시간 채팅 구현
+    - 서버 기반 클라이언트, 독립 클라이언트 라이브러리 사용
+    - 노드 CORS 이슈 이해 및 해결 (cors 패키지)
