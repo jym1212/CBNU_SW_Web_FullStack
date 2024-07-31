@@ -1,0 +1,71 @@
+<!-- 2024.07.31 -->
+<!-- 독립 클라이언트 라이브러리 사용 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅 서버에 연결된 모든 사용자간 채팅</title>
+</head>
+
+<body>
+    <h1>채팅 서버에 연결된 모든 사용자간 채팅</h1>
+
+    <!-- 닉네임, 메세지 입력 영역 -->
+    닉네임 : <input type="text" id="nickname" name="nickname" /><br />
+    메세지 : <input type="text" id="message" name="message" /><br />
+    <button id="btnSend">전송</button>
+
+    <!-- 채팅 수신 이력 표시 영역 -->
+    <ul id="chatHistory">
+        <li>채팅 이력</li>
+    </ul>
+
+    <!-- jquery cdn 라이브러리 참조-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- socket.io javascript library 참조-->
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" crossorigin="anonymous"></script>
+
+
+    <!-- 프론트엔드 코딩 영역 - 웹 브라우저에서 실행 -->
+    <script>
+
+        //클라이언트(웹브라우저) 서버 연결 소켓 객체 정의
+        //서버 소켓과 연결을 시도하고, 연결이 완료되면 연결 지속
+        //io.connect('/')를 통해 서버 소켓과 연결 완료하고,
+        //서버로 메세지를 보낼 socket 객체 반환
+        var socket = io.connect('http://localhost:3000/');
+
+
+        //jquery에서 id 속성으로 html 요소 찾음 $("#html요소의 id값")
+        //전송 버튼이 클릭되면 서버로 사용자 메세지 전송
+        $("#btnSend").click(function () {
+
+            //사용자 닉네임과 메세지 입력값 추출
+            var nickName = $("#nickname").val();
+            var message = $("#message").val();
+
+            var msgData = `${nickName} : ${message}`;
+
+            //서버 소켓의 전체 채팅 메세지 수신기 호출
+            //socket.emit('서버 이벤트 수신기명', '서버로 보낼 메세지');
+            socket.emit('broadcast', msgData);
+        });
+
+
+        //서버에서 보내준 메세지를 수신하는 수신기 정의
+        //클라이언트 이벤트 메세지 수신기 정의
+        socket.on('receiveAll', function (serverMsg) {
+
+            //서버에서 보내준 메세지 문자열을 포함한 li 태그를 하나 생성
+            //ul 태그에 li 태그를 추가하여 채팅 이력을 표시 (append() 메소드)
+            $("#chatHistory").append(`<li>${serverMsg}</li>`);
+        });
+
+    </script>
+</body>
+
+</html>
