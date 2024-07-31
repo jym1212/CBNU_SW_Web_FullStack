@@ -25,7 +25,7 @@ router.get('/list', async (req, res, next) => {
     const articles = await db.Article.findAll();
 
     //Step2 : DB에서 조회된 전체 게시글 정보를 뷰파일에 전달 후 반환
-    res.render('article/list', {moment, articles});
+    res.render('article/list', { moment, articles });
 });
 
 
@@ -38,6 +38,9 @@ router.get('/list', async (req, res, next) => {
 router.post('/list', async (req, res, next) => {
 
     //Step1 : 사용자가 입력한 조회 옵션 데이터 추출
+    const title = req.body.title;
+    const ip_address = req.body.ip_address;
+    const is_display_code = req.body.is_display_code;
 
     //Step2 : DB 게시글 테이블에서 해당 게시글 정보 조회
     const articles = await db.Article.findAll(); 

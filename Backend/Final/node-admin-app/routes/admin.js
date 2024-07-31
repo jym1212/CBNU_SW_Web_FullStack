@@ -70,45 +70,6 @@ router.get('/list', async (req, res, next) => {
     //해당 테이블 전체 건수 조회
     //count() = SELECT COUNT(*) FROM admin;
     const adminsCount = await db.Admin.count();
-
-    
-    /*
-    //순수 SQL 구문을 DB 서버에 전달해서 동일한 결과값 반환
-    let query = `SELECT
-                admin_member_id,
-                admin_id,
-                admin_name,
-                email,
-                company_code,
-                dept_name,
-                used_yn_code,
-                reg_date
-            FROM admin
-            WHERE used_yn_code = 1`;
-    
-    //회사코드 추가 필터 조건 반영
-    if (company_code != '9') {
-        query += ` AND company_code = ${company_code}`;
-    }
-
-    //관리자 ID 추가 필터 조건 반영
-    if (admin_id.length > 0) {
-        query += ` AND admin_id Like %${admin_id}%`;
-    }
-
-    //사용정보 옵션 추가 필터 조건 반영
-    if (used_yn_code != '9') {
-        query += ` AND used_yn_code = ${used_yn_code}`;
-    }
-
-    query += `ORDER BY reg_date DESC;`;
-    
-    //SQL 쿼리를 직접 수행하여 결과값 반환
-    const admins3 = await sequelize.query(query, {
-        raw: true,
-        type: QueryTypes.SELECT
-    });
-    */
 });
 
 
@@ -126,7 +87,43 @@ router.post('/list', async (req, res, next) => {
     const used_yn_code = req.body.used_yn_code;
 
     //Step2 : DB 관리자 계정 테이블에서 해당 관리자 계정 정보 조회
-    const admins = await db.Admin.findAll({ where: { admin_id: admin_id } }); 
+    //const admins = await db.Admin.findAll({ where: { admin_id: admin_id } }); 
+
+    //동적 SQL 쿼리를 사용하여 관리자 계정 정보 조회 (순수 SQL 구문)
+    let query = `SELECT 
+        admin_member_id,
+        admin_id,admin_name,
+        email,
+        company_code,
+        dept_name,
+        used_yn_code,
+        reg_date
+    FROM admin 
+    WHERE admin_member_id > 0`;
+
+    //회사코드 추가 필터 조건 반영
+    if (company_code != 9) {
+        query += ` AND company_code = ${company_code} `;
+    }
+
+    //관리자아이디 추가 필터조건 반영
+    if (admin_id.length > 0) {
+        query += ` AND admin_id Like '%${admin_id}%' `;
+    }
+
+    //관리자아이디 추가 필터조건 반영
+    if (used_yn_code != 9) {
+        query += ` AND used_yn_code = ${used_yn_code} `;
+    }
+
+    query += ' ORDER BY reg_date DESC;'
+
+
+    //sql쿼리를 직접 수행하는 구문        
+    const admins = await sequelize.query(query, {
+        raw: true,
+        type: QueryTypes.SELECT
+    });
 
     //Step3 : 조회 옵션 기본 값을 사용자가 입력/선택한 값으로 저장하여 뷰파일에 전달
     const searchOption = {
@@ -137,6 +134,7 @@ router.post('/list', async (req, res, next) => {
 
     //Step4 : DB에서 조회된 해당 관리자 계정 정보를 뷰파일에 전달 후 반환
     res.render('admin/list', { moment, admins, searchOption });
+
 });
 
 

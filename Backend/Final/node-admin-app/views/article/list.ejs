@@ -33,23 +33,23 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="control-label" for="OrderNo">글 제목</label>
-                        <input type="text" id="title" class="form-control">
+                        <label class="control-label" for="title">게시글 제목</label>
+                        <input type="text" id="title" name="title" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="control-label" for="OrderName">IP주소</label>
-                        <input type="text" id="ipaddress" class="form-control">
+                        <label class="control-label" for="ip_address">IP주소</label>
+                        <input type="text" id="ip_address" name="ip_address" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="control-label" for="MobileNo">게시 여부</label>
-                        <select id="display" name="name" class="form-control">
-                            <option value=9 selected>전체</option>
-                            <option value=1>게시함</option>
-                            <option value=2>게시안함</option>
+                        <label class="control-label" for="is_display_code">게시 여부</label>
+                        <select id="is_display_code" name="is_display_code" class="form-control">
+                            <option value="9" selected>전체</option>
+                            <option value="1">게시함</option>
+                            <option value="0">게시 안 함</option>
                         </select>
                     </div>
                 </div>
@@ -72,39 +72,34 @@
                             <thead>
                                 <tr>
                                     <th width="10%">게시글 번호</th>
-                                    <th width="40%">제목</th>
-                                    <th width="10%">IP주소</th>
+                                    <th width="20%">제목</th>
+                                    <th width="30%">내용</th>
+                                    <th width="10%">IP 주소</th>
                                     <th width="10%">조회수</th>
                                     <th width="10%">게시 여부</th>
-                                    <th width="10%">등록자 번호</th>
                                     <th width="10%">등록 일시</th>
                                 </tr>
                             </thead>
                             <tbody class="hoverTblBody" id="list">
-                                <!-- <tr>
+                                <tr>
                                     <% for(var i=0; i<articles.length; i++){ %>
                                         <tr>
-                                            <td><a href="/article/modify/<%=articles[i].admin_member_id%>"><%=articles[i].admin_id%></a></td>
-                                            <td><%=admins[i].admin_name%></td>
-                                            <td><%=admins[i].email%></td>
-                                            <td><% if(admins[i].company_code==0) { %>
-                                                    자회사
-                                                <% } else { %>
-                                                    협력사
-                                                <% } %>
-                                            </td>
-                                            <td><%=admins[i].dept_name%></td>
+                                            <td><a href="/article/modify/<%=articles[i].article_id%>"><%=articles[i].article_id%></a></td>
+                                            <td><%=articles[i].title%></td>
+                                            <td><%=articles[i].contents%></td>
+                                            <td><%=articles[i].ip_address%></td>
+                                            <td><%=articles[i].view_count%></td>
                                             <td>
-                                                <% if(admins[i].company_code==0) { %>
-                                                    사용 중
+                                                <% if(articles[i].is_display_code == 1) { %>
+                                                    게시함
                                                 <% } else { %>
-                                                    사용 안 함
+                                                    게시 안 함
                                                 <% } %>
                                             </td>
-                                            <td><%=moment(admins[i].reg_date).format('YYYY-MM-DD HH:mm')%></td>
+                                            <td><%=moment(articles[i].reg_date).format('YYYY-MM-DD HH:mm')%></td>
                                         </tr>
                                     <% } %>
-                                </tr> -->
+                                </tr>
                             </tbody>
                         </table>
 
