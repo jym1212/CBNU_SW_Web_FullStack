@@ -1,5 +1,5 @@
 <!-- 2024.07.31 -->
-<!-- 서버 기반 클라이언트 라이브러리 사용 -->
+<!-- 독립 클라이언트 라이브러리 사용 -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +13,8 @@
 <body>
     <h1>채팅방 기준 그룹 사용자간 채팅</h1>
 
-    STEP1 : 채팅방 개설히고 입장<br/>
-    STEP2 : 채팅방 사용자간 채팅 진행 <br/><br/>
+    STEP1 : 채팅방 개설히고 입장<br />
+    STEP2 : 채팅방 사용자간 채팅 진행 <br /><br />
 
     <!-- 닉네임 입력 영역 -->
     닉네임 : <input type="text" id="nickname" name="nickname" /><br />
@@ -23,31 +23,32 @@
     채널명 : <input type="text" id="channel" name="channel" />
     <button id="btnEntry">입장</button>
     <button id="btnExit">퇴장</button>
-    <br/><br/>
+    <br /><br />
 
     <!-- 메세지 입력 영역 -->
     메세지 : <input type="text" id="message" name="message" />
     <button id="btnSend">전송</button>
-    
+
     <!-- 채팅 수신 이력 표시 영역 -->
     <ul id="chatHistory">
         <li>채팅 이력</li>
     </ul>
-    
+
     <!-- jquery cdn 라이브러리 참조-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- socket.io javascript library 참조-->
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" crossorigin="anonymous"></script>
+
     
     <!-- 프론트엔드 코딩 영역 - 웹 브라우저에서 실행 -->
     <script>
-        
+
         //클라이언트(웹브라우저) 서버 연결 소켓 객체 정의
         //서버 소켓과 연결을 시도하고, 연결이 완료되면 연결 지속
         //io.connect('/')를 통해 서버 소켓과 연결 완료하고,
         //서버로 메세지를 보낼 socket 객체 반환
-        var socket = io.connect('/');
+        var socket = io.connect('http://localhost:3000/');
 
 
         //jquery에서 id 속성으로 html 요소 찾음 $("#html요소의 id값")
@@ -72,7 +73,7 @@
 
         //입장 버튼이 클릭되면 입력한 채팅방(채널)에 특정 닉네임으로 입장 처리
         $("#btnEntry").click(function () {
-            
+
             //채널명과 닉네임 추출
             var channel = $("#channel").val();
             var nickName = $("#nickname").val();
@@ -84,7 +85,7 @@
 
 
         //퇴장 버튼이 클릭되면 입력한 채팅방(채널)에서 특정 닉네임으로 퇴장 처리
-        $("#btnExit").click(function(){
+        $("#btnExit").click(function () {
 
             //채널명과 닉네임 추출
             var channel = $('#channel').val();
@@ -115,13 +116,13 @@
 
 
         //채팅방 입장 완료 후, 입장 완료 메세지 수신기 정의
-        socket.on('entryOk', function(entryMsg){
+        socket.on('entryOk', function (entryMsg) {
             $("#chatHistory").append(`<li>${entryMsg}</li>`);
-        }); 
+        });
 
 
         //채팅방 퇴장 완료 후, 퇴장 완료 메세지 수신기 정의
-        socket.on('exitOk', function(exitMsg){
+        socket.on('exitOk', function (exitMsg) {
             $("#chatHistory").append(`<li>${exitMsg}</li>`);
         })
 

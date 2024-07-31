@@ -4,14 +4,35 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+//2024.07.31
+//RESTful API 서비스 CORS 이슈 해결을 위한 cors 패키지 참조
+const cors = require('cors');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+//모든 웹사이트/모바일 프론트에서 REST API를 접근할 수 있게 허락함.
+app.use(cors());
+
+
+//특정 도메인 주소만 접근
+/* app.use(
+  cors({
+    method: ["GET", "POST", "DELETE", "OPTIONS"],
+    origin: ["http://localhost:3000", "https://test.com"]
+  })
+) */
+
 
 app.use(logger('dev'));
 app.use(express.json());
