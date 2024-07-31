@@ -23,7 +23,7 @@
     - MVC 패턴 View 심화, Model 기초 (MySQL 설치 및 연동)
     - Final project 중 Admin-app의 주요 Routing, View 구현
 
-#
+<br/><br/>
 
 # 2주차(07.29 ~ 08.02) 
 ### Node Backend Advanced
