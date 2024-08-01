@@ -117,7 +117,7 @@ router.post('/list', async (req, res, next) => {
         query += ` AND used_yn_code = ${used_yn_code} `;
     }
 
-    query += ' ORDER BY reg_date DESC;'
+    query += ' ORDER BY reg_date DESC;';
 
 
     //SQL 쿼리 수행

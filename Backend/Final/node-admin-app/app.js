@@ -4,9 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 //2024.07.30
 //환경 설정 파일 구성
 require('dotenv').config();
+
+
+//2024.08.01
+//RESTful API 서비스 CORS 이슈 해결을 위한 cors 패키지 참조
+const cors = require('cors');
 
 
 //2024.07.26
@@ -39,6 +45,10 @@ sequelize.sync();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+//모든 웹사이트/모바일 프론트에서 REST API를 접근할 수 있게 허락함.
+app.use(cors());
 
 
 //2024.07.26

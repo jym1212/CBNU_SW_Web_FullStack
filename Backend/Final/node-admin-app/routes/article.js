@@ -82,7 +82,7 @@ router.post('/list', async (req, res, next) => {
         query += ` AND is_display_code = ${is_display_code} `;
     }
         
-    query += ' ORDER BY reg_date DESC;'
+    query += ' ORDER BY reg_date DESC;';
 
     //SQL 쿼리 수행
     const articles = await sequelize.query(query, {

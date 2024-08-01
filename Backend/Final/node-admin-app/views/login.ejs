@@ -28,7 +28,7 @@
             </p>
             <p>Login in. To see it in action.</p>
 
-            <form class="m-t" role="form" action="/login" method="post">
+            <form class="m-t" role="form" id="loginForm" action="/login" method="post">
                 <div class="form-group">
                     <input type="text" id="admin_id" name="admin_id" class="form-control" placeholder="Username" required="">
                 </div>
@@ -49,7 +49,7 @@
     <script>
         var loginResultCode = "<%=resultMsg.code%>";
 
-        if(loginResultCode == 401 || loginResultCode == 402){
+        if(loginResultCode == 401 || loginResultCode == 402 || loginResultCode == 500){
             alert("<%=resultMsg.msg%>");
         }
     </script>

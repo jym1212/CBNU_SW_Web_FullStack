@@ -60,44 +60,55 @@ router.post('/login', async (req, res, next) => {
     code: 200,
     msg: ""
   };
-  
-  //Step1 : 관리자 아이디/비밀번호 정보 추출
-  const admin_id = req.body.admin_id;
-  const admin_password = req.body.admin_password;
 
-  //Step2 : DB에서 동일한 관리자 아이디 정보 조회
-  const admin = await db.Admin.findOne({ where: { admin_id: admin_id } });
+  try {
+    //Step1 : 관리자 아이디/비밀번호 정보 추출
+    const admin_id = req.body.admin_id;
+    const admin_password = req.body.admin_password;
 
-  //Step3 : DB에 저장된 비밀번호와 관리자 입력 비밀번호를 체크
-  //동일한 아이디가 존재하는 경우
-  if (admin) {
+    //Step2 : DB에서 동일한 관리자 아이디 정보 조회
+    const admin = await db.Admin.findOne({ where: { admin_id: admin_id } });
 
-    //DB에 저장된 비밀번호가 입력한 비밀번호가 일치하는지 체크
-    //bcrypt.compare(사용자가 입력한 비밀번호, DB에 저장된 암호화된 비밀번호);
-    //compare() 메소드는 비밀번호가 일치하는 경우 true, 일치하지 않는 경우 false 반환
+    //Step3 : DB에 저장된 비밀번호와 관리자 입력 비밀번호를 체크
+    //동일한 아이디가 존재하는 경우
+    if (admin) {
 
-    //비밀번호가 일치하는 경우
-    if (await bcrypt.compare(admin_password, admin.admin_password)) {
+      //DB에 저장된 비밀번호가 입력한 비밀번호가 일치하는지 체크
+      //bcrypt.compare(사용자가 입력한 비밀번호, DB에 저장된 암호화된 비밀번호);
+      //compare() 메소드는 비밀번호가 일치하는 경우 true, 일치하지 않는 경우 false 반환
 
-      //Step4 : 아이디/비밀번호가 일치하면 메인 페이지로 이동시키고,
-      //일치하지 않으면 처리 결과 data를 login.ejs 뷰파일로 전달
-      res.redirect('/main');
+      //비밀번호가 일치하는 경우
+      if (await bcrypt.compare(admin_password, admin.admin_password)) {
+
+        //Step4 : 아이디/비밀번호가 일치하면 메인 페이지로 이동시키고,
+        //일치하지 않으면 처리 결과 data를 login.ejs 뷰파일로 전달
+
+        resultMsg.code = 200;
+        resultMsg.msg = "로그인에 성공했습니다."
+
+        res.redirect('/main');
+      }
+
+      //비밀번호가 일치하지 않는 경우
+      else {
+
+        resultMsg.code = 402;
+        resultMsg.msg = "비밀번호가 일치하지 않습니다.";
+        res.render('login', { layout: false, resultMsg });
+      }
     }
-  
-    //비밀번호가 일치하지 않는 경우
+
+    //동일한 아이디가 존재하지 않는 경우
     else {
 
-      resultMsg.code = 402;
-      resultMsg.msg = "비밀번호가 일치하지 않습니다.";
+      resultMsg.code = 401;
+      resultMsg.msg = "동일한 아이디가 존재하지 않습니다.";
       res.render('login', { layout: false, resultMsg });
     }
-  }
-
-  //동일한 아이디가 존재하지 않는 경우
-  else {
     
-    resultMsg.code = 401;
-    resultMsg.msg = "동일한 아이디가 존재하지 않습니다.";
+  } catch (error) {
+    resultMsg.code = 500;
+    resultMsg.msg = "서버에 에러가 발생했습니다.";
     res.render('login', { layout: false, resultMsg });
   }
 });
