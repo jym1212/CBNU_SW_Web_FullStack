@@ -5,6 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 
+//2024.08.01
+//Sequelize ORM 이용하여 DB 서버와 연결
+var sequelize = require('./models/index.js').sequelize;
+
+
 //2024.07.31
 //RESTful API 서비스 CORS 이슈 해결을 위한 cors 패키지 참조
 const cors = require('cors');
@@ -12,14 +17,20 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var memberAPIRouter = require('./routes/memberAPI');
+var articleAPIRouter = require('./routes/articleAPI');
+var channelAPIRouter = require('./routes/channelAPI');
 
 var app = express();
+
+
+//MySQL과 자동 연결 처리, 모델 기반 물리 테이블 생성 처리 제공
+sequelize.sync(); 
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 //모든 웹사이트/모바일 프론트에서 REST API를 접근할 수 있게 허락함.
 app.use(cors());
@@ -41,7 +52,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', usersRouter); 
+
+app.use('/api/member', memberAPIRouter);
+app.use('/api/article', articleAPIRouter);
+app.use('/api/channel', channelAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

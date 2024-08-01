@@ -92,7 +92,8 @@ router.post('/list', async (req, res, next) => {
     //동적 SQL 쿼리를 사용하여 관리자 계정 정보 조회 (순수 SQL 구문)
     let query = `SELECT 
         admin_member_id,
-        admin_id,admin_name,
+        admin_id,
+        admin_name,
         email,
         company_code,
         dept_name,
@@ -106,12 +107,12 @@ router.post('/list', async (req, res, next) => {
         query += ` AND company_code = ${company_code} `;
     }
 
-    //관리자아이디 추가 필터조건 반영
+    //관리자 ID 추가 필터조건 반영
     if (admin_id.length > 0) {
         query += ` AND admin_id Like '%${admin_id}%' `;
     }
 
-    //관리자아이디 추가 필터조건 반영
+    //사용 여부 추가 필터조건 반영
     if (used_yn_code != 9) {
         query += ` AND used_yn_code = ${used_yn_code} `;
     }
@@ -119,7 +120,7 @@ router.post('/list', async (req, res, next) => {
     query += ' ORDER BY reg_date DESC;'
 
 
-    //sql쿼리를 직접 수행하는 구문        
+    //SQL 쿼리 수행
     const admins = await sequelize.query(query, {
         raw: true,
         type: QueryTypes.SELECT

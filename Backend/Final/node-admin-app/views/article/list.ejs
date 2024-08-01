@@ -31,31 +31,34 @@
     <form action="/article/list" method="post">
         <div class="ibox-content m-b-sm border-bottom">
             <div class="row">
+                <!-- 게시글 제목 영역 -->
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="title">게시글 제목</label>
-                        <input type="text" id="title" name="title" class="form-control">
+                        <input type="text" id="title" name="title" value="<%=searchOption.title%>" class="form-control">
                     </div>
                 </div>
+                <!-- 게시글 내용 영역 -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="control-label" for="ip_address">IP주소</label>
-                        <input type="text" id="ip_address" name="ip_address" class="form-control">
+                        <label class="control-label" for="contents">게시글 내용</label>
+                        <input type="text" id="contents" name="contents" value="<%=searchOption.contents%>" class="form-control">
                     </div>
                 </div>
+                <!-- 게시 여부 영역 -->
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="is_display_code">게시 여부</label>
                         <select id="is_display_code" name="is_display_code" class="form-control">
-                            <option value="9" selected>전체</option>
-                            <option value="1">게시함</option>
-                            <option value="0">게시 안 함</option>
+                            <option value="9" <% if(searchOption.is_display_code == "9"){ %> selected <% } %> >전체</option>
+                            <option value="1" <% if(searchOption.is_display_code == "1"){ %> selected <% } %> >게시함</option>
+                            <option value="0" <% if(searchOption.is_display_code == "0"){ %> selected <% } %> >게시 안 함</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="text-center">
-                <button type="button" id="btnSearch" class="btn btn-primary">조회</button>
+                <button type="submit" id="btnSearch" class="btn btn-primary">조회</button>
                 <a href="/article/create" class="btn btn-info">신규 게시글</a>
             </div>
         </div>
@@ -71,23 +74,35 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th width="10%">게시글 번호</th>
                                     <th width="20%">제목</th>
-                                    <th width="30%">내용</th>
-                                    <th width="10%">IP 주소</th>
+                                    <th width="20%">내용</th>
+                                    <th width="10%">고유 번호</th>
+                                    <th width="10%">유형 코드</th>
                                     <th width="10%">조회수</th>
                                     <th width="10%">게시 여부</th>
-                                    <th width="10%">등록 일시</th>
+                                    <th width="20%">등록 일시</th>
                                 </tr>
                             </thead>
                             <tbody class="hoverTblBody" id="list">
                                 <tr>
                                     <% for(var i=0; i<articles.length; i++){ %>
                                         <tr>
-                                            <td><a href="/article/modify/<%=articles[i].article_id%>"><%=articles[i].article_id%></a></td>
-                                            <td><%=articles[i].title%></td>
+                                            <td><a href="/article/modify/<%=articles[i].article_id%>"><%=articles[i].title%></a></td>
                                             <td><%=articles[i].contents%></td>
-                                            <td><%=articles[i].ip_address%></td>
+                                            <td>
+                                                <% if(articles[i].board_type_code == 1) { %>
+                                                    공지사항
+                                                <% } else { %>
+                                                    일반 사용자
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if(articles[i].article_type_code == 0) { %>
+                                                    일반
+                                                <% } else { %>
+                                                    상단 고정
+                                                <% } %>
+                                            </td>
                                             <td><%=articles[i].view_count%></td>
                                             <td>
                                                 <% if(articles[i].is_display_code == 1) { %>
