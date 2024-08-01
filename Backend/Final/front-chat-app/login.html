@@ -54,28 +54,36 @@
 				</div>
 				<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
 					<div class="login-wrapper">
-						<form action="index.html">
+
+						<!-- 로그인 폼 영역 -->
+						<form id="loginForm">
 							<div class="login-screen">
 								<div class="login-body">
 									<a href="index.html" class="login-logo">
 										<img src="img/logo.svg" alt="Quick Chat">
 									</a>
-									<h6>Welcome back,<br>Please login to your account.</h6>
+									<h6>환영합니다. <br>로그인을 해주세요.</h6>
+									
+									<!-- 이메일 영역 -->
 									<div class="field-wrapper">
-										<input type="email" autofocus>
-										<div class="field-placeholder">Email ID</div>
+										<input type="email" id="email" autofocus>
+										<div class="field-placeholder">이메일</div>
 									</div>
+
+									<!-- 비밀번호 영역 -->
 									<div class="field-wrapper mb-3">
-										<input type="password">
-										<div class="field-placeholder">Password</div>
+										<input type="password" id="password">
+										<div class="field-placeholder">비밀번호</div>
 									</div>
+
+									<!-- 로그인 버튼 영역 -->
 									<div class="actions">
-										<a href="forgot-password.html">Forgot password?</a>
-										<button type="submit" class="btn btn-primary">Login</button>
+										<a href="forgot-password.html">비밀번호를 잊어버리셨나요?</a>
+										<button type="submit" class="btn btn-primary">로그인</button>
 									</div>
 								</div>
 								<div class="login-footer">
-									<span class="additional-link">No Account? <a href="signup.html" class="btn btn-secondary">Sign Up</a></span>
+									<span class="additional-link">회원이 아니신가요? <a href="signup.html" class="btn btn-secondary">회원가입</a></span>
 								</div>
 							</div>
 						</form>
@@ -88,6 +96,74 @@
 		<!-- *************
 			************ Login container end *************
 		************* -->
+
+		<!-- JQuery 라이브러리 참조 -->
+		<script src="js/jquery.min.js"></script>
+
+		<script>
+
+			//로그인 폼 유효성 검사 진행하고, 백엔드 로그인 API 호출
+			$("#loginForm").submit(function(e){
+
+				//onSubmit 이벤트 발생 취소하여 화면 깜빡임을 사전에 방지
+				e.preventDefault();
+
+				//Step1 : 사용자 입력 값 유효성 검증
+				if ($("#email").val() == "") {
+					alert("이메일 주소를 입력해주세요.");
+					$("#email").focus();
+					return false;
+				}
+
+				if ($("#password").val() == "") {
+					alert("비밀번호를 입력해주세요.");
+					$("#password").focus();
+					return false;
+				}
+
+				//Step2 : 사용자 입력값을 UI 요소에 추출해서 JSON 데이터 생성
+				//백엔드에 전달할 기존 회원 정보 정의
+				var member = {
+					email: $("#email").val(),
+					password: $("#password").val()
+				};
+
+				//Step3 : UI 요소에서 추출한 JSON 데이터를 백엔드 RESTful API에 전달하여 회원가입 
+				//JQuery AJAX를 이용하여 POST 방식으로 백엔드 API 주소에 데이터 전달
+				$.post('http://localhost:5000/api/member/login', member).done(function (result) {
+
+					//백엔드에서 처리 결과 값 확인
+					console.log("백엔드에서 처리 결과 값 확인 :", result);
+
+					if (result.code == 200) {
+						//Step4 : 백엔드에서 제공해준 JWT 토큰 값을 웹브라우저 로컬스토리지 공간에 저장
+						//Local Storage : 데이터를 사용자가 삭제하지 않으면 계속 유지
+						//Session Storage : 윈도우나 웹브라우저를 닫으면 데이터 삭제
+						//Cookie : 만료기간을 정해 데이터 유지 (보안 문제가 있을 수 있음)
+						localStorage.setItem("chatMemberToken", result.data);
+
+						//Step5 : 로그인 성공 시 채팅방 목록 페이지로 이동
+						location.href = "./index.html";
+					} else {
+
+						if(result.code == 400 && result.msg == "Not Exist Email"){
+							alert("이메일이 존재하지 않습니다.");
+							$("#email").val() = "";
+							$("#email").focus();
+						} 
+						else if (result.code == 400 && result.msg == "InCorrect Password") {
+							alert("비밀번호가 일치하지 않습니다.");
+							$("#password").val() = "";
+							$("#password").focus();
+						}
+						else{
+							alert("로그인에 실패했습니다.\n관리자에게 문의하세요.");
+						}
+					}
+				});
+				
+			});
+		</script>
 
 	</body>
 </html>

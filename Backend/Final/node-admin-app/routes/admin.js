@@ -253,7 +253,7 @@ router.post('/modify', async (req, res, next) => {
         telephone,
         used_yn_code,
         edit_date: Date.now(),
-        edit_member_id: 1
+        edit_member_id: 2
     };
     
     //Step3 : DB 관리자 계정 테이블에 해당 관리자 계정 정보 수정

@@ -1817,6 +1817,35 @@
 		<!-- 프론트엔드 코딩 영역 - 웹 브라우저에서 실행 -->
 		<script>
 
+			//웹페이지가 웹브라우저에 로딩 완료될 때, 백엔드 API를 호출
+			//현재 로그인한 사용자 프로필 정보 조회
+			$(document).ready(function(){
+
+				//웹브라우저에 저장된 토큰값 추출
+				var jwtToken = localStorage.getItem('chatMemberToken');
+
+				//index.html 반드시 로그인 후 접속이 가능
+				//로그인 했으면 토큰값이 웹브라우저 로컬스토리지에 저장
+				//토큰값이 없으면 로그인 페이지로 이동
+				if(jwtToken == undefined){
+					location.href = "./login.html";
+				}
+
+				//ajax() 메서드를 사용하여 백엔드 API 호출
+				$.ajax({
+					type: 'GET',
+					url: 'http://localhost:5000/api/member/profile',
+					headers: { Authorization: `Bearer ${jwtToken}`},
+					dataType: 'json',
+					success: function(result){
+						console.log("프로필 조회 결과 :", result);
+					},
+					error: function(error){
+						console.log("백엔드 AI 호출 에러:", error);
+					}
+				});
+			});
+
 			//현재 URL에서 쿼리스트링 키명으로 값 추출
 			function getQueryString(keyName){
 				var results = new RegExp('[\?&]' + keyName + '=([^&#]*)').exec(window.location.href);

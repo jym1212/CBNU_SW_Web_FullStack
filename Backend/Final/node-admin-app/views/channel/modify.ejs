@@ -30,40 +30,64 @@
 
         <!-- html hidden 태그에 게시글 고유번호를 저장하고 name 속성을 지정하여 
                      post 방식으로 전달 시, 게시글 고유번호도 전달 처리 -->
-        <input type="hidden" id="channel_id" name="channel_id" value="">
+        <input type="hidden" id="channel_id" name="channel_id" value="<%=channel.channel_id%>">
 
         <div class="ibox-content m-b-sm border-bottom">
-            <!-- 글 제목 영역 -->
+
+            <!-- 채팅방 제목 영역 -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label class="control-label">채팅방 제목</label>
-                        <input type="text" id="title" name="title" value="" class="form-control">
+                        <label class="control-label" for="channel_name">채널명</label>
+                        <input type="text" id="channel_name" name="channel_name" value="<%=channel.channel_name%>" class="form-control">
                     </div>
                 </div>
             </div>
-            <!-- 글 내용 영역 -->
+            <!-- 채팅방 소개 영역 -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label class="control-label">채팅방 소개</label>
-                        <textarea class="form-control" id="contents" name="contents" rows="10" cols="5"></textarea>
+                        <label class="control-label" for="channel_desc">채널 설명</label>
+                        <textarea class="form-control" id="channel_desc" name="channel_desc" rows="10" cols="5"><%=channel.channel_desc%></textarea>
                     </div>
                 </div>
             </div>
-            <!-- 게시 여부 영역 -->
+            
+            <!-- 최대 접속자 제한, 상태 코드, 분류 코드 영역 -->
             <div class="row">
+                <!-- 최대 접속자 제한 영역 -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label" for="user_limit">최대 접속자 제한수</label>
+                            <input type="text" id="user_limit" name="user_limit" value="<%=channel.user_limit%>" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- 상태 코드 영역 -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="control-label">게시 여부</label>
-                        <select class="form-control" id="display" name="display">
-                            <option value="9">선택</option>
-                            <option value="1">게시</option>
-                            <option value="0">게시 안 함</option>
+                        <label class="control-label" for="channel_state_code">상태 코드</label>
+                        <select class="form-control" id="channel_state_code" name="channel_state_code">
+                            <option value="9" <% if(channel.channel_state_code == "9"){ %> selected <% } %> >선택</option>
+                            <option value="1" <% if(channel.channel_state_code == "1"){ %> selected <% } %> >사용 중</option>
+                            <option value="0" <% if(channel.channel_state_code == "0"){ %> selected <% } %> >사용 안 함</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- 분류 코드 영역 -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="category_code">분류 코드</label>
+                        <select class="form-control" id="category_code" name="category_code">
+                            <option value="9" <% if(channel.category_code == "9"){ %> selected <% } %> >선택</option>
+                            <option value="1" <% if(channel.category_code == "1"){ %> selected <% } %> >1:1 채팅</option>
+                            <option value="2" <% if(channel.category_code == "2"){ %> selected <% } %> >그룹 채팅</option>
                         </select>
                     </div>
                 </div>
             </div>
+            
             <!-- 저장, 취소 버튼 영역 -->
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">수정</button>
@@ -74,4 +98,10 @@
     </form>
 </div>
 
-<script></script>
+<script>
+    $("#btnDelete").click(function(){
+        if(confirm("정말 삭제하시겠습니까?")){
+            location.href = "/channel/delete?id=<%=channel.channel_id%>";
+        }
+    });
+</script>

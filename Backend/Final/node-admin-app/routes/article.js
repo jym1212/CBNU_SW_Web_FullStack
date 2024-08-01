@@ -195,7 +195,7 @@ router.post('/modify', async (req, res, next) => {
         article_type_code,
         is_display_code,
         edit_date: Date.now(),
-        edit_member_id: 1
+        edit_member_id: 2
     };
 
     //Step3 : DB 게시글 테이블에 해당 게시글 정보 수정

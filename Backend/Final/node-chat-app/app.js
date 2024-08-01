@@ -6,6 +6,11 @@ var logger = require('morgan');
 
 
 //2024.08.01
+//환경 설정 정보 구성
+require('dotenv').config();
+
+
+//2024.08.01
 //Sequelize ORM 이용하여 DB 서버와 연결
 var sequelize = require('./models/index.js').sequelize;
 
@@ -17,9 +22,8 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+//회원정보 관리 RESTful API 라우터 참조
 var memberAPIRouter = require('./routes/memberAPI');
-var articleAPIRouter = require('./routes/articleAPI');
-var channelAPIRouter = require('./routes/channelAPI');
 
 var app = express();
 
@@ -54,9 +58,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter); 
 
+//memberAPIRouter 기본 호출 주소 체계 정의
 app.use('/api/member', memberAPIRouter);
-app.use('/api/article', articleAPIRouter);
-app.use('/api/channel', channelAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
