@@ -2,7 +2,7 @@
 ### Node Backend Basic
 
 - 07.22
-    - ECMAScript 문법 개념 및 실습
+    - ECMAScript 2015(ES6) 문법 개념 및 실습
     - Node, Npm, Express, Module 설치 및 실습
 
 - 07.23 
@@ -42,3 +42,8 @@
     - Socket IO 패키지 사용하여 실시간 채팅 구현
     - 서버 기반 클라이언트, 독립 클라이언트 라이브러리 사용
     - 노드 CORS 이슈 이해 및 해결 (cors 패키지)
+
+- 08.01
+    - JWN Token 기반 사용자 인증, 권한 부여, Token 해독 
+    - Local Storage, Session Storage, Cookies 개
+    - Final project 중 Chat-app의 채팅, 로그인, 프로필 기능 구현 
