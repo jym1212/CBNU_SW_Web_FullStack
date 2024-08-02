@@ -17,6 +17,28 @@ const jwt = require('jsonwebtoken');
 var db = require('../models/index.js');
 
 
+//2024.08.02
+//파일 업로드를 위한 multer 패키지 참조
+var multer = require('multer');
+
+//파일 저장 위치 지정
+var storage = multer.diskStorage({
+
+    //파일 저장 위치
+    destination(req, file, cb) {
+        cb(null, 'public/upload/');
+    },
+
+    //서버에 저장되는 파일명
+    filename(req, file, cb) {
+        cb(null, `${Date.now()}__${file.originalname}`);
+    },
+});
+
+//일반 업로드 처리 객체 생성
+var upload = multer({ storage: storage });
+
+
 /** 중요: 클라이언트에서 호출하는 주소와 호출 방식이 일치해야 해당 라우팅 메소드 실행 **/
 
 /*
@@ -207,5 +229,53 @@ router.get('/profile', async (req, res, next) => {
 
     res.json(apiResult);
 });
+
+
+/*
+사용자 프로필 사진 업로드 및 정보 처리 라우팅 메소드
+- 호출 주소: http://localhost:5000/api/member/profile/upload
+- 호출 방식: Post 방식
+- 응답 결과 : 프로필 사진 업로드 후, DB에 저장된 프로필 사진 경로 반환
+- 프론트엔드에서 첨부한 이미지 파일 업로드 처리 후, 업로드된 정보 반환
+*/
+router.post('/profile/upload', upload.single('file'), async (req, res, next) => {
+
+    let apiResult = {
+        code: 400,
+        data: null,
+        msg: ""
+    };
+
+    try {
+
+        //Step1: 업로드된 파일 정보 추출하기 
+        const uploadFile = req.file;
+
+        const filePath = `/upload/${uploadFile.filename}`;
+        const fileName = uploadFile.originalname;
+        const fileSize = uploadFile.size;
+        const mimeType = uploadFile.mimetype;
+
+        //파일정보를 DB에 저장하기
+        const file = {
+            filePath,
+            fileName,
+            fileSize,
+            mimeType
+        };
+
+        //Step2: 업로드된 파일정보 반환하기 
+        apiResult.code = 200;
+        apiResult.data = file;
+        apiResult.msg = "Ok";
+
+    } catch (err) {
+        apiResult.code = 500;
+        apiResult.data = null;
+        apiResult.msg = "Failed";
+    }
+
+    res.json(apiResult);
+})
 
 module.exports = router;

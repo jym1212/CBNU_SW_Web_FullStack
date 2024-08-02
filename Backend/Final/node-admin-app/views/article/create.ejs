@@ -26,7 +26,7 @@
 
 <!-- 우측 콘텐츠 영역 -->
 <div class="wrapper wrapper-content">
-    <form id="createForm" action="/article/create" method="post">
+    <form id="createForm" action="/article/create" method="post" enctype="multipart/form-data">
         <div class="ibox-content m-b-sm border-bottom">
 
             <!-- 글 제목 영역 -->
@@ -51,7 +51,8 @@
 
             <!-- 게시판 고유번호, 게시글 유형코드, 게시 여부 영역 -->
             <div class="row">
-                <div class="col-sm-4">
+                <!-- 게시판 고유번호 영역 -->
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="control-label" for="board_type_code">게시판 고유번호</label>
                         <select class="form-control" id="board_type_code" name="board_type_code">
@@ -61,7 +62,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <!-- 게시글 유형코드 영역 -->
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="control-label" for="article_type_code">게시글 유형코드</label>
                         <select class="form-control" id="article_type_code" name="article_type_code">
@@ -71,7 +73,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <!-- 게시 여부 영역 -->
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="control-label" for="is_display_code">게시 여부</label>
                         <select class="form-control" id="is_display_code" name="is_display_code">
@@ -79,6 +82,13 @@
                             <option value="1">게시</option>
                             <option value="0">게시 안 함</option>
                         </select>
+                    </div>
+                </div>
+                <!-- 첨부 파일 영역 -->
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="file">첨부 파일</label>
+                        <input type="file" id="file" name="file" class="form-control">
                     </div>
                 </div>
             </div>

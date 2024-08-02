@@ -1254,6 +1254,7 @@
 								<!-- Account Settings Container Start -->
 								<div class="account-settings-container">
 
+									<!-- 프로필 환경 설정 영역 -->
 									<div class="accordion" id="settingsAccordion">
 										<div class="account-settings-block">
 											<div class="account-settings-header" id="generalInfo">
@@ -1266,18 +1267,17 @@
 
 												<div class="account-settings-body">
 
+													<!-- 현재 로그인 사용자 프로필 이미지 확인 영역 -->
 													<div class="upload-profile">
-
 														<div class="upload-profile-image">
-															<img src="img/user2.png" alt="Profile Image">
+															<img src="img/user2.png" id="profileImage" alt="Profile Image">
 														</div>
 														<div class="field-wrapper">
 															<div class="custom-file">
-																<input type="file" class="custom-file-input" id="uploadProfile">
+																<input type="file"  class="custom-file-input" id="uploadProfile" name="file">
 																<label class="custom-file-label" for="uploadProfile">Choose file</label>
 															</div>
 														</div>
-
 													</div>
 
 													<div class="field-wrapper">
@@ -1614,7 +1614,7 @@
 									</div>
 									<div class="field-wrapper">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="uploadProfile">
+											<input type="file" class="custom-file-input">
 											<label class="custom-file-label" for="uploadProfile">Group image</label>
 										</div>
 									</div>
@@ -1693,7 +1693,7 @@
 									</div>
 									<div class="field-wrapper">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="uploadProfile">
+											<input type="file" class="custom-file-input">
 											<label class="custom-file-label" for="uploadProfile">Group image</label>
 										</div>
 									</div>
@@ -1931,7 +1931,39 @@
 				$("#chatHistory").append(msgTemplate);
 			});
 
-		</script>
 
+			//파일 첨부 태그의 change 이벤트 발생하면 파일을 서버로 전송
+			$("#uploadProfile").change(function (e) {
+
+				//폼 태그를 프로그래밍 방식으로 구현하는 FormData 객체 생성
+				var data = new FormData();
+
+				//append() 메서드를 이용하여 파일 첨부
+				//= <form><input type='file' name='file'/></form>
+				data.append('file', $("input[name=file]")[0].files[0]);
+
+				e.preventDefault();
+
+				console.log("프론트엔드에서 전송하는 파일 정보 :", data);
+
+				//백엔드 REST API 주소로 파일 전송하고 반환
+				$.ajax({
+					data: data,
+					type: 'POST',
+					url: 'http://localhost:5000/api/member/profile/upload',
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function (result) {
+						console.log("파일 전송 결과:", result);
+					},
+					error: function (error) {
+						console.error("파일 전송 에러발생:", error);
+					}
+				});
+			
+				return false;
+			});
+		</script>
 	</body>
 </html>

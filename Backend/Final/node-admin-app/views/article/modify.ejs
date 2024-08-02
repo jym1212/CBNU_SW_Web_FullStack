@@ -56,7 +56,8 @@
             
             <!-- 게시판 고유번호, 게시글 유형코드, 게시 여부 영역 -->
             <div class="row">
-                <div class="col-sm-4">
+                <!-- 게시판 고유번호 영역 -->
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="control-label">게시판 고유번호</label>
                         <select class="form-control" id="board_type_code" name="board_type_code">
@@ -66,7 +67,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <!-- 게시글 유형코드 영역 -->
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="control-label" for="article_type_code">게시글 유형코드</label>
                         <select class="form-control" id="article_type_code" name="article_type_code">
@@ -76,7 +78,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <!-- 게시여부 영역 -->
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="control-label" for="is_display_code">게시 여부</label>
                         <select class="form-control" id="is_display_code" name="is_display_code">
@@ -84,6 +87,18 @@
                             <option value="1" <% if(article.is_display_code == "1"){ %> selected <% } %> >게시</option>
                             <option value="0" <% if(article.is_display_code == "0"){ %> selected <% } %> >게시 안 함</option>
                         </select>
+                    </div>
+                </div>
+                <!-- 첨부 파일 영역 -->
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">첨부 파일</label>
+                        <input type="file" id="file" name="file" class="form-control" />
+                        <% if(articleFile !=null){ %>
+                            <a href="<%=articleFile.file_path%>" target="_blank">
+                                <%=articleFile.file_name%>
+                            </a>
+                        <% } %>
                     </div>
                 </div>
             </div>
