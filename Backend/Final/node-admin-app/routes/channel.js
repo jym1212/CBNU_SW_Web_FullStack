@@ -17,13 +17,18 @@ var sequelize = db.sequelize;
 const { QueryTypes } = sequelize;
 
 
+//2024.08.02
+//관리자 로그인 여부 체크 미들웨어 함수 참조
+const { inLoggined } = require('./sessionMiddleware.js');
+
+
 /*
 채팅방 정보 목록 웹페이지 요청과 응답 처리 라우팅 메소드
 - 호출 주소 : http://localhost:5001/channel/list
 - 호출 방식 : Get 방식
 - 응답 결과 : 채널방 목록 웹페이지 반환
 */
-router.get('/list', async (req, res, next) => {
+router.get('/list', inLoggined, async (req, res, next) => {
 
     //Step1 : 채팅방 목록 조회 옵션 데이터 정의
     const searchOption = {
@@ -46,7 +51,7 @@ router.get('/list', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 채팅방 조회 옵션 결과 웹페이지 반환
 */
-router.post('/list', async (req, res, next) => {
+router.post('/list', inLoggined, async (req, res, next) => {
 
     //Step1 : 사용자가 입력한 조회 옵션 데이터 추출
     const channel_name = req.body.channel_name;
@@ -103,7 +108,7 @@ router.post('/list', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 신규 채널방 등록 웹페이지 반환
 */
-router.get('/create', async (req, res, next) => {
+router.get('/create', inLoggined, async (req, res, next) => {
 
     //신규 채팅방 등록을 위한 웹페이지 반환
     res.render('channel/create');
@@ -116,7 +121,7 @@ router.get('/create', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 채널방 목록 웹페이지로 이동 처리
 */
-router.post('/create', async (req, res, next) => {
+router.post('/create', inLoggined, async (req, res, next) => {
 
     //Step1 : 사용자가 입력한 폼태그 내 입력/선택 데이터 추출
     const channel_id = req.body.channel_id;
@@ -154,7 +159,7 @@ router.post('/create', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 삭제된 채널방 DB 데이터 삭제 처리 후 목록 웹페이지로 이동
 */
-router.get('/delete', async (req, res, next) => {
+router.get('/delete', inLoggined, async (req, res, next) => {
 
     //Step1 : URL 주소에서 삭제할 채널방 고유번호 추출
     const channelIdx = req.query.id;
@@ -173,7 +178,7 @@ router.get('/delete', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 수정된 채널방 DB 데이터 수정 처리 후 목록 웹페이지로 이동
 */
-router.post('/modify', async (req, res, next) => {
+router.post('/modify', inLoggined, async (req, res, next) => {
 
     //Step1 : 채널방 수정 데이터를 추출하고, 수정할 데이터 소스 생성
     const channelIdx = req.body.channel_id;
@@ -209,7 +214,7 @@ router.post('/modify', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 기존 채널방 정보가 포함된 수정 웹페이지 제공
 */
-router.get('/modify/:id', async (req, res, next) => {
+router.get('/modify/:id', inLoggined, async (req, res, next) => {
 
     //Step1 : URL 주소에서 수정할 채널방 고유번호 추출
     const channelIdx = req.params.id;

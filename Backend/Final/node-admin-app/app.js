@@ -19,9 +19,15 @@ const cors = require('cors');
 //레이아웃 노드 패키지 참조
 var expressLayouts = require('express-ejs-layouts');
 
+
 //2024.07.30
 //ORM Model 영역의 sequelize(DB 연결 객체) 속성 참조
 var sequelize = require('./models/index.js').sequelize;
+
+
+//2024.08.02
+//세션 처리를 위한 패키지 참조
+var session = require('express-session');
 
 
 //2024.07.26
@@ -41,6 +47,22 @@ var app = express();
 
 //MySQL과 자동 연결 처리, 모델 기반 물리 테이블 생성 처리 제공
 sequelize.sync();
+
+
+//백엔드 앱에서 세션 사용하기 위해 설정
+app.use(
+  session({
+    resave: false,            //매번 세션 강제 저장 여부 (로그인 할 때마다 세션 값이 변경 없어도 강제로 저장 여부)
+    saveUninitialized: true,  //세션 값이 없을 때 세션을 저장할지 여부
+    secret: "testsecret",     //세션 아이디를 생성할 때 사용한 암호화 키 값
+    cookie: {                 //세션 쿠키 설정
+      httpOnly: true,         //http 지원 여부
+      secure: false,          //http 환경에서만 세션 정보를 주고 받도록 처리 여부
+      maxAge: 1000 * 60 * 5   //5분 동안 서버 세션을 유지 (1000 = 1초) - 만료 시간 설정
+    },
+  }),
+);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

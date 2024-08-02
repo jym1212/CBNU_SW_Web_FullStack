@@ -17,13 +17,18 @@ var sequelize = db.sequelize;
 const { QueryTypes } = sequelize;
 
 
+//2024.08.02
+//관리자 로그인 여부 체크 미들웨어 함수 참조
+const { inLoggined } = require('./sessionMiddleware.js');
+
+
 /* 
 게시글 정보 목록 웹페이지 요청과 응답 처리 라우팅 메소드
 - 호출 주소 : http://localhost:5001/article/list
 - 호출 방식 : Get 방식
 - 응답 결과 : 게시글 목록 웹페이지 반환
 */
-router.get('/list', async (req, res, next) => {
+router.get('/list', inLoggined, async (req, res, next) => {
 
     //Step1 : 게시글 목록 조회 옵션 데이터 정의
     const searchOption = {
@@ -46,7 +51,7 @@ router.get('/list', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 게시글 조회 옵션 결과 웹페이지 반환
 */
-router.post('/list', async (req, res, next) => {
+router.post('/list', inLoggined, async (req, res, next) => {
 
     //Step1 : 사용자가 입력한 조회 옵션 데이터 추출
     const title = req.body.title;
@@ -108,7 +113,7 @@ router.post('/list', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 신규 게시글 등록 웹페이지 반환
 */
-router.get('/create', async (req, res, next) => {
+router.get('/create', inLoggined, async (req, res, next) => {
 
     //신규 게시글 등록을 위한 웹페이지 반환
     res.render('article/create');
@@ -121,7 +126,7 @@ router.get('/create', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 신규 게시글 DB 등록 처리 후 목록 웹페이지로 이동
 */
-router.post('/create', async (req, res, next) => {
+router.post('/create', inLoggined, async (req, res, next) => {
     
     //Step1 : 신규 게시글 등록 폼에서 사용자가 입력/선택한 값 추출
     const title = req.body.title;
@@ -157,7 +162,7 @@ router.post('/create', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 삭제된 게시글 DB 데이터 삭제 처리 후 목록 웹페이지로 이동
 */
-router.get('/delete', async (req, res, next) => {
+router.get('/delete', inLoggined, async (req, res, next) => {
 
     //Step1 : URL 주소에서 삭제할 게시글 고유번호 추출
     const articleIdx = req.query.id;
@@ -176,7 +181,7 @@ router.get('/delete', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 수정된 게시글 DB 데이터 수정 처리 후 목록 웹페이지로 이동
 */
-router.post('/modify', async (req, res, next) => {
+router.post('/modify', inLoggined, async (req, res, next) => {
     
     //Step1 : 게시글 수정 데이터를 추출하고, 수정할 데이터 소스 생성
     const articleIdx = req.body.article_id;
@@ -205,13 +210,14 @@ router.post('/modify', async (req, res, next) => {
     res.redirect('/article/list');
 })
 
+
 /*
 기존 게시글 데이터 조회 요청과 응답 처리 라우팅 메소드
 - 호출 주소 : http://localhost:5001/article/modify/1
 - 호출 방식 : Get 방식
 - 응답 결과 : 기존 게시글 정보가 포함된 수정 웹페이지 제공
 */
-router.get('/modify/:id', async (req, res, next) => {
+router.get('/modify/:id', inLoggined, async (req, res, next) => {
 
     //Step1 : URL 주소에서 수정할 게시글 고유번호 추출
     const articleIdx = req.params.id;

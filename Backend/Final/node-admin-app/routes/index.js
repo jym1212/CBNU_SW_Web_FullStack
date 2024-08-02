@@ -15,6 +15,11 @@ var bcrypt = require('bcryptjs');
 var db = require('../models/index.js');
 
 
+//2024.08.02
+//관리자 로그인 여부 체크 미들웨어 함수 참조
+const { inLoggined } = require('./sessionMiddleware.js');
+
+
 /* 
 기본 웹페이지 요청과 응답 처리 라우팅 메소드 
 - 호출 주소 : http://localhost:5001/
@@ -80,13 +85,33 @@ router.post('/login', async (req, res, next) => {
       //비밀번호가 일치하는 경우
       if (await bcrypt.compare(admin_password, admin.admin_password)) {
 
-        //Step4 : 아이디/비밀번호가 일치하면 메인 페이지로 이동시키고,
-        //일치하지 않으면 처리 결과 data를 login.ejs 뷰파일로 전달
+        //Step4 : 아이디/비밀번호가 일치하면 서버 세션에 로그인 사용자 정보 저장
+        //서버 세션에 저장할 로그인 사용자 주요 정보 설정
+        var seesionLoginData = {
+          admin_member_id: admin.admin_member_id,
+          admin_id: admin.admin_id,
+          admin_password: admin.admin_password,
+          company_code: admin.company_code,
+          dept_name: admin.dept_name,
+          admin_name: admin.admin_name
+        };
 
-        resultMsg.code = 200;
-        resultMsg.msg = "로그인에 성공했습니다."
+        //req.session 속성에 loginUser 동적 속성 정의
+        //현재 로그인한 사용자 주요 데이터 저장
+        req.session.loginUser = seesionLoginData;
 
-        res.redirect('/main');
+        //현재 사용자의 로그인 여부를 동적 속성 isLogined 정의
+        req.session.isLogined = true;
+
+        //Step5 : 서버 세션 최종 저장 후, 메인 페이지로 이동
+        req.session.save(function () {
+          console.log('세션 저장 완료');
+
+          resultMsg.code = 200;
+          resultMsg.msg = "로그인에 성공했습니다."
+          
+          res.redirect('/main');
+        });
       }
 
       //비밀번호가 일치하지 않는 경우
@@ -120,7 +145,7 @@ router.post('/login', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : main.ejs 뷰파일 반환
 */
-router.get('/main', async (req, res, next) => {
+router.get('/main', inLoggined, async (req, res, next) => {
   res.render('main');
 })
 

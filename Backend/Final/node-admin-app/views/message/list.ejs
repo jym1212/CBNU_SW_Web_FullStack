@@ -27,36 +27,46 @@
 <!-- 우측 콘텐츠 영역 -->
 <div class="wrapper wrapper-content">
 
-    <div class="ibox-content m-b-sm border-bottom">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label class="control-label" for="OrderNo">채널 이름</label>
-                    <input type="text" id="title" class="form-control">
+    <!-- 조회 옵션 영역 -->
+    <form action="/message/list" method="post">
+        <div class="ibox-content m-b-sm border-bottom">
+            <div class="row">
+                <!-- 채널 이름 영역 -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="OrderNo">채널 이름</label>
+                        <input type="text" id="title" class="form-control">
+                    </div>
+                </div>
+                <!-- 채팅 닉네임 영역 -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="nick_name">채팅 닉네임</label>
+                        <input type="text" id="nick_name" name="nick_name" class="form-control">
+                    </div>
+                </div>
+                <!-- 게시 여부 영역 -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="msg_type_code">메세지 유형 코드</label>
+                        <select id="msg_type_code" name="msg_type_code" class="form-control">
+                            <option value="9" selected>전체</option>
+                            <option value="0">퇴장 메세지</option>
+                            <option value="1">입장 메세지</option>
+                            <option value="2">일반 메세지</option>
+                            <option value="3">파일 공유 메세지</option>
+                            <option value="4">시스템 공지 메시지</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label class="control-label" for="OrderName">채팅 닉네임</label>
-                    <input type="text" id="ipaddress" class="form-control">
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label class="control-label" for="MobileNo">게시 여부</label>
-                    <select id="display" name="name" class="form-control">
-                        <option value=9 selected>전체</option>
-                        <option value=1>게시함</option>
-                        <option value=2>게시안함</option>
-                    </select>
-                </div>
+            <div class="text-center">
+                <button type="button" id="btnSearch" class="btn btn-primary">조회</button>
             </div>
         </div>
-        <div class="text-center">
-            <button type="button" id="btnSearch" class="btn btn-primary">조회</button>
-        </div>
-    </div>
+    </form>
 
+    <!-- 조회 결과 목록 영역 -->
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">

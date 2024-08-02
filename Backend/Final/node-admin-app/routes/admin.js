@@ -24,13 +24,18 @@ var sequelize = db.sequelize;
 const { QueryTypes } = sequelize;
 
 
+//2024.08.02
+//관리자 로그인 여부 체크 미들웨어 함수 참조
+const { inLoggined } = require('./sessionMiddleware.js');
+
+
 /*
 관리자 계정 목록 웹페이지 요청과 응답 처리 라우팅 메소드
 - 호출 주소 : http://localhost:5001/admin/list
 - 호출 방식 : Get 방식
 - 응답 결과 : 관리자 계정 목록 웹페이지 반환
 */
-router.get('/list', async (req, res, next) => {
+router.get('/list', inLoggined, async (req, res, next) => {
 
     //Step1 : 관리자 목록 조회 옵션 데이터 정의
     //조회 옵션 데이터를 JSON 객체로 정의하여 뷰파일에 전달
@@ -79,7 +84,7 @@ router.get('/list', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 관리자 조회 옵션 결과 웹페이지 반환
 */
-router.post('/list', async (req, res, next) => {
+router.post('/list', inLoggined, async (req, res, next) => {
 
     //Step1: 사용자가 입력한 조회 옵션 데이터 추출
     const company_code = req.body.company_code;
@@ -145,7 +150,7 @@ router.post('/list', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 신규 관리자 계정 등록 웹페이지 반환
 */
-router.get('/create', async (req, res, next) => {
+router.get('/create', inLoggined, async (req, res, next) => {
     
     //신규 관리자 계정 등록을 위한 웹페이지 반환
     res.render('admin/create');
@@ -158,7 +163,7 @@ router.get('/create', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 신규 관리자 계정 정보를 DB 데이터 등록 처리 후 목록 웹페이지로 이동
 */
-router.post('/create', async (req, res, next) => {
+router.post('/create', inLoggined, async (req, res, next) => {
     
     //Step1 : 사용자가 입력한 폼태그 내 입력/선택 데이터 추출
     const admin_id = req.body.admin_id;
@@ -175,6 +180,9 @@ router.post('/create', async (req, res, next) => {
     //단방향이기에 암호화만 가능하고, 복호화는 불가능함.
     const encryptedPassword = await bcrypt.hash(admin_password, 12);
 
+    //현재 로그인한 사용자 관리자 고유번호 추출 (세션 사용)
+    const loginAdminId = req.session.loginUser.admin_member_id;
+
     //Step3 : DB 관리자 계정 테이블에 저장할 JSON 데이터 생성
     //주의 : DB에 저장할 데이터 구조는 반드시 해당 모델 속성명과 동일해야 함.
     //신규 데이터 등록 시, 모델의 속성 중 NN(NotNull) 속성에 대한 값은 반드시 입력되어야 함.
@@ -188,12 +196,12 @@ router.post('/create', async (req, res, next) => {
         telephone,
         used_yn_code,
         reg_date: Date.now(),
-        reg_member_id: 1
+        reg_member_id: loginAdminId
     };
 
     //Step4 : DB 관리자 계정 테이블에 신규 관리자 계정 데이터 등록 처리
     //실제 저장된 관리자 계정 정보를 DB 서버가 저장하고 반환함.
-    //create() = INSERT INTO admin(...) VALUES(...); 
+    //create() = INSERT INTO admin(...) VALUES(...); o
     //SQL 구문으로 ORM Framework이 내부적으로 자동 생성하여 DB 서버에 전달/실행되고, 저장 결과를 반환
     const registedAdmin = await db.Admin.create(admin);
 
@@ -208,7 +216,7 @@ router.post('/create', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 삭제된 관리자 계정 정보를 DB 데이터 삭제 처리 후 목록 웹페이지로 이동
 */
-router.get('/delete', async (req, res, next) => {
+router.get('/delete', inLoggined, async (req, res, next) => {
 
     //Step1 : URL 주소에서 삭제할 관리자 고유번호 추출
     const adminIdx = req.query.id;
@@ -228,7 +236,7 @@ router.get('/delete', async (req, res, next) => {
 - 호출 방식 : Post 방식
 - 응답 결과 : 수정된 관리자 계정 정보를 DB 데이터 수정 처리 후 목록 웹페이지로 이동
 */
-router.post('/modify', async (req, res, next) => {
+router.post('/modify', inLoggined, async (req, res, next) => {
 
     //Step1 : 사용자가 수정한 폼태그 내 입력/선택 데이터 추출
     //관리자 계정 고유번호를 hidden 태그를 통해 추출
@@ -243,6 +251,9 @@ router.post('/modify', async (req, res, next) => {
     const telephone = req.body.telephone;
     const used_yn_code = req.body.used_yn_code;
 
+    //현재 로그인한 사용자 관리자 고유번호 추출 (세션 사용)
+    const loginAdminId = req.session.loginUser.admin_member_id;
+
     //Step2 : DB 관리자 계정 테이블에 수정할 JSON 데이터 생성
     //주의 : DB에 저장할 데이터 구조는 반드시 해당 모델 속성명과 동일해야 함.
     const admin = {
@@ -253,7 +264,7 @@ router.post('/modify', async (req, res, next) => {
         telephone,
         used_yn_code,
         edit_date: Date.now(),
-        edit_member_id: 2
+        edit_member_id: loginAdminId
     };
     
     //Step3 : DB 관리자 계정 테이블에 해당 관리자 계정 정보 수정
@@ -272,7 +283,7 @@ router.post('/modify', async (req, res, next) => {
 - 호출 방식 : Get 방식
 - 응답 결과 : 기존 관리자 계정 정보가 포함된 수정 웹페이지 제공
 */
-router.get('/modify/:id', async (req, res, next) => {
+router.get('/modify/:id', inLoggined, async (req, res, next) => {
 
     //Step1 : URL 주소에서 수정할 관리자 계정 고유번호 추출
     const adminIdx = req.params.id;
