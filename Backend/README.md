@@ -6,17 +6,17 @@
     - Node, Npm, Express, Module 설치 및 실습
 
 - 07.23 
-    - 웹 페이지 요청과 응답 프로세스
+    - 웹 페이지 요청과 응답 프로세스 
     - Client/Server, Frontend/Backend 관계 이해
     - Routing 메소드 (Get, Post) 실습
 
 - 07.24 
-    - 동기, 비동기, 콜백함수 개념 실습
+    - 동기, 비동기, 콜백함수 개념 실습 (sync, async)
     - RESTful API 실습, Postman 사용하여 API 테스트
     - MVC 패턴 Controller (Routing) 기초
 
 - 07.25 
-    - Middleware 실습
+    - Middleware 함수를 사용하여 기능 제어 실습
     - MVC 패턴 Controller 심화, View 실습 (include, layout)
 
 - 07.26 
@@ -44,6 +44,14 @@
     - 노드 CORS 이슈 이해 및 해결 (cors 패키지)
 
 - 08.01
-    - JWN Token 기반 사용자 인증, 권한 부여, Token 해독 
-    - Local Storage, Session Storage, Cookies 개
-    - Final project 중 Chat-app의 채팅, 로그인, 프로필 기능 구현 
+    - JWN Token 기반 사용자 인증, 권한 부여, Token 해독 (jsonwebtoken)
+    - Local Storage, Session Storage, Cookies 개념
+    - Final project 중 Chat-app의 채팅, 로그인, 프로필 기능 구현
+
+- 08.02
+    - Final project 중 Admin-app의 로그인 정보 세션에 저장 (express-session)
+    - 서버 사이드(세션, 쿠키), 프론트엔드/백엔드(로컬 스토리지)
+    - session Middleware 함수를 이용하여 관리자 권한 부여
+    - Final project 중 Admin-app의 파일 업로드 기능 구현 (multer)
+    - Final project 중 Chat-app의 프로필 이미지 업로드 기능 구현 (multer)
+    - 클라우드 컴퓨팅 개념 
