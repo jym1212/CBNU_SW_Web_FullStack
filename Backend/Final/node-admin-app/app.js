@@ -116,4 +116,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+//2024.08.05
+//노드 앱의 기본 WAS 서비스 포트
+app.set("port", process.env.PORT || 5001);
+
+var server = app.listen(app.get("port"), function () {});
+
+//module.exports = app;
