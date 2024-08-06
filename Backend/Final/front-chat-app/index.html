@@ -1837,7 +1837,8 @@
 				//ajax() 메서드를 사용하여 백엔드 API 호출
 				$.ajax({
 					type: 'GET',
-					url: 'http://localhost:5000/api/member/profile',
+					//url: 'http://localhost:5000/api/member/profile',
+					url: 'http://cbnu19.wechatmaker.com/api/member/profile',
 					headers: { Authorization: `Bearer ${jwtToken}`},
 					dataType: 'json',
 					success: function(result){
@@ -1870,8 +1871,8 @@
 			//서버 소켓과 연결을 시도하고, 연결이 완료되면 연결 지속
 			//io.connect('/')를 통해 서버 소켓과 연결 완료하고,
 			//서버로 메세지를 보낼 socket 객체 반환
-			var socket = io.connect('http://localhost:5000/');
-
+			//var socket = io.connect('http://localhost:5000/');
+			var socket = io.connect('http://cbnu19.wechatmaker.com/');
 
 			//jquery에서 id 속성으로 html 요소 찾음 $("#html요소의 id값")
 			//전송 버튼이 클릭되면 서버로 사용자 메세지 전송
@@ -1950,7 +1951,8 @@
 				$.ajax({
 					data: data,
 					type: 'POST',
-					url: 'http://localhost:5000/api/member/profile/upload',
+					//url: 'http://localhost:5000/api/member/profile/upload',
+					url: 'http://cbnu19.wechatmaker.com/api/member/profile/upload',
 					cache: false,
 					contentType: false,
 					processData: false,

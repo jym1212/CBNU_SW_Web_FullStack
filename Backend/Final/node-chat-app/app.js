@@ -10,6 +10,11 @@ var logger = require('morgan');
 require('dotenv').config();
 
 
+//2024.08.06
+//웹소켓 모듈 추가
+const webSocket = require('./socket');
+
+
 //2024.08.01
 //Sequelize ORM 이용하여 DB 서버와 연결
 var sequelize = require('./models/index.js').sequelize;
@@ -77,4 +82,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+//2024.08.06
+//노드 앱의 기본 WAS 서비스 포트
+app.set("port", process.env.PORT || 5000);
+
+//노드 앱이 작동되는 서버 객체 생성
+var server = app.listen(app.get("port"), function () { });
+
+//웹소켓 express 서버와 연결
+webSocket(server);
+
+//module.exports = app;
