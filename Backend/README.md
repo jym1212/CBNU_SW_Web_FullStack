@@ -2,7 +2,7 @@
 ### Node Backend Basic
 
 - 07.22 (1일차)
-    - ECMAScript 2015(ES6) 문법 개념 및 실습
+    - ECMAScript 2015(ES6) 문법 개념 및 실습 (JavaScript)
     - Node, Npm, Express, Module 설치 및 실습
 
 - 07.23 (2일차)
@@ -63,6 +63,13 @@
 
 - 08.05 (11일차)
     - Naver Cloud 우분투 가상 서버 환경 구축 (NCloud, puTTY, WinSCP)
-    - 도메인 주소 기반가상 호스팅 (domain 주소(Client), IP 주소(Server))
+    - 도메인 주소 기반 가상 호스팅 (domain 주소(Client), IP 주소(Server))
     - 애플리케이션 WAS/WEB 서버 구축 (NginX, pm2, MySQL)
     - Final project 중 Admin-app 배포 
+    
+- 08.06 (12일차)
+    - AWS Cloud Amazon Linux 2023 EC2 가상 서버 환경 구축 (AWS, puTTy)
+    - DNS 가상 호스팅 (domain 주소(Client), IP 주소(Server))
+    - 애플리케이션 WAS/WEB 서버 구축 (NginX, pm2, Maria DB)
+    - SSL HTTPS 통신 보안 적용 (Let's Encrypt SSL)
+    - Final project 중 Chat-app 배포
