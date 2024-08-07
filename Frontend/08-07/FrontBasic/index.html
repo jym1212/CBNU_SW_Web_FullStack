@@ -1,0 +1,68 @@
+<!-- 2024.08.06 -->
+<!-- html 기본 구조 -->
+
+<!-- DOCTYPE html : 해당 index.html 문서는 html5 표준 문법에 의해 코딩된 문서임을 명시함. -->
+<!DOCTYPE html>
+
+<!-- html 페이지의 콘텐츠 내용이 기본 영어 버전임을 명시함.  -->
+<html lang="ko">
+
+<!-- head 태그 영역 : 사용자를 위한 영역이 아닌 웹브라우저, 검색엔진 SWBot을 위한 추가 정보 제공 영역 -->
+<head>
+
+    <!-- meta 태그 영역 : 페이지에 대한 중요한 정보를 검색 엔진에 제공 영역 -->
+    <!-- 웹브라우저에게 영어권 문자, 유니코드문자(UTF-8) 컨텐츠 내에 포함되어 있어 올바르게 해석하라고 명시함.
+    (UTF-8 : 한글, 중국어, 일본어, 태국어, 아랍어 등 비영어권 문자) -->
+    <meta charset="UTF-8">
+
+    <!-- 모바일 브라우저에서 기본 가로 해상도를 물리적 디바이스 가로 해상도를 
+     기준으로 설정하고, 확대/축소를 설정하는 기능 제공함. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 웹브라우저 탭에 표시되는 웹페이지 제목 표시 및 검색엔진 SW에 제공된 웹페이지 제목 정보 제공
+    title 태그 : 웹페이지 내에 가장 중요한 태그 -->
+    <title>메인 페이지 </title>
+
+    <!-- link 태그 영역 : 외부 스타일 시트 파일을 연결하는 영역 -->
+    <link rel="stylesheet" href="common.css"></link>
+    
+    <!-- style 태그 영역 : 해당 페이지의 스타일을 적용하기 위한 스타일 정의 영역 (임베디드된 스타일시트) -->
+    <style>
+        /* h1 태그에 대한 스타일 정의 */
+        h1 {
+            color : red;
+            font-size: 30px;
+            text-align: center;
+        };
+    </style>
+
+</head>
+
+<!-- body 태그 영역 : 사용자를 위한 UI, UX 제공 영역
+실제 사용자가 보는 화면의 내용은 모두 body 태그 내에 존재함. -->
+<body>
+    <h1 style="color: blue"> 메인 제목입니다. </h1>
+    <h2>부제목입니다. </h2>
+
+    <!-- script 태그 영역 : 해당 웹페이지 기능을 구현하는 프론트엔드 기능 구현 영역 -->
+    <script>
+
+        //console : 개발자 도구에서 사용하는 콘솔 객체 (F12)
+        console.log("index.html 페이지가 로딩되었습니다.");
+        console.error("페이지 로딩 시, 에러 메세지 출력");
+        console.warn("페이지 로딩 시, 경고 메세지 출력");
+        console.info("페이지 로딩 시, 정보 메세지 출력");
+
+        //코드 내 디버거 사용 
+        //debugger;
+
+        console.log("로직1이 실행되었습니다.");
+
+        console.log("로직2가 실행되었습니다.");
+
+        //debugger;
+
+        console.log("로직3이 실행되었습니다.");
+    </script>
+</body>
+</html>
