@@ -58,7 +58,7 @@
 
 <br/><br/>
 
-# 3주차(08.05 ~ 08.09) 
+# 3주차(08.05 ~ 08.06) 
 ### Cloud Basic & Deploy
 
 - 08.05 (11일차)
@@ -68,7 +68,7 @@
     - Final project 중 Admin-app 배포 
     
 - 08.06 (12일차)
-    - AWS Cloud Amazon Linux 2023 EC2 가상 서버 환경 구축 (AWS, puTTy)
+    - AWS Cloud Amazon Linux 2023 EC2 가상 서버 환경 구축 (AWS, puTTy, WinSCP)
     - DNS 가상 호스팅 (domain 주소(Client), IP 주소(Server))
     - 애플리케이션 WAS/WEB 서버 구축 (NginX, pm2, Maria DB)
     - SSL HTTPS 통신 보안 적용 (Let's Encrypt SSL, port 443 사용)

@@ -6,12 +6,12 @@
     - Node Backend Basic
 
 
-- 2주차(07.29 ~ 08.02)
+- 2주차(07.29 ~ 08.06)
     - Node Backend Advanced
     - Cloud Basic & Deploy
 
 
-- 3주차(08.05 ~ 08.09)
+- 3주차(08.07 ~ 08.09)
     - React & Next.js Basic (Frontend)
 
 
