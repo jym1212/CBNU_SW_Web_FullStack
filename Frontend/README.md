@@ -7,3 +7,7 @@
     - Frontend/Backend 개념 및 기술, 관계 이해
     - TypeScript 개념 및 기초 문법 실습 (Basic)
 
+- 08.08 (14일차)
+    - TypeScript 기초, 심화 문법 실습 (Basic, Core)
+    - React 개념 및 개발 환경 구축 (react, yarn)
+    - React Project 생성 (CRA, Vite, Next.JS)
