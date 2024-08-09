@@ -1,0 +1,4 @@
+# 2024.08.09
+# 특정 파일 제외하고 git에 업로드
+
+08-09/next-jsx-app/node_modules
