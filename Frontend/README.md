@@ -1,4 +1,4 @@
-# 3주차(08.07 ~ 08.09)
+# 3주차 (08.07 ~ 08.09)
 
 ### React & Next.js Basic (Frontend)
 
@@ -19,3 +19,14 @@
   - React JSX 기초 코딩 실습
   - React Component(props, state, content) 구성요소 실습
   - Page Component를 이용한 재활용 가능한 Component 실습
+
+<br/><br/>
+
+# 4주차 (08.12 ~ 08.16)
+
+### Next.js Advanced (Frontend)
+
+- 08.12 (16일차)
+  - 함수형 State Component 실습 (userStateHook)
+  - state 관리 실습 (props 관리, event handler 함수)
+  - Todo-List 실습 (props 전달, component 분할, useState 사용)
