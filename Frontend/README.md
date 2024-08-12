@@ -10,6 +10,12 @@
   - TypeScript 개념 및 기초 문법 실습 (Basic)
 
 - 08.08 (14일차)
+
   - TypeScript 기초, 심화 문법 실습 (Basic, Core)
   - React 개념 및 개발 환경 구축 (react, yarn)
   - React Project 생성 (CRA, Vite, Next.JS)
+
+- 08.09 (15일차)
+  - React JSX 기초 코딩 실습
+  - React Component(props, state, content) 구성요소 실습
+  - Page Component를 이용한 재활용 가능한 Component 실습
