@@ -1,124 +1,140 @@
 <!-- 신규 관리자 계정 등록 페이지 -->
 
-<meta>
+<meta />
 <style></style>
 
 <!-- 우측 콘텐츠 헤더영역 -->
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>관리자 계정 정보 관리</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="/main">Home </a>>
-            </li>
-            <li>
-                <a href="/admin/list">관리자 계정 정보 관리 </a>>
-            </li>
-            <li class="active">
-                <strong>신규 관리자 등록</strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
-
-    </div>
+  <div class="col-lg-10">
+    <h2>관리자 계정 정보 관리</h2>
+    <ol class="breadcrumb">
+      <li><a href="/main">Home </a>></li>
+      <li><a href="/admin/list">관리자 계정 정보 관리 </a>></li>
+      <li class="active">
+        <strong>신규 관리자 등록</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2"></div>
 </div>
 
 <!-- 우측 콘텐츠 영역 -->
 <div class="wrapper wrapper-content">
-    <form id="createForm" action="/admin/create" method="post">
-        <div class="ibox-content m-b-sm border-bottom">
-            
-            <!-- row : 화면 상 한 줄의 입력 영역, col : 한 줄의 입력 영역을 여러 개로 나누어 표시 -->
-            <!-- col-sm-4 : 화면에 4개의 입력 영역을 표시(4/12), 모바일에서는 4개씩 밑으로 표시 (반응형) -->
+  <form id="createForm" action="/admin/create" method="post">
+    <div class="ibox-content m-b-sm border-bottom">
+      <!-- row : 화면 상 한 줄의 입력 영역, col : 한 줄의 입력 영역을 여러 개로 나누어 표시 -->
+      <!-- col-sm-4 : 화면에 4개의 입력 영역을 표시(4/12), 모바일에서는 4개씩 밑으로 표시 (반응형) -->
 
-            <!-- 관리자 계정, 암호, 소속회사 UI 제공 -->
-            <div class="row">
-                <!-- 아이디 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label">관리자 ID</label>
-                        <input type="text" id="admin_id" name="admin_id" class="form-control">
-                    </div>
-                </div>
-                <!-- 비밀번호 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label">관리자 비밀번호</label>
-                        <input type="password" id="admin_password" name="admin_password" class="form-control">
-                    </div>
-                </div>
-                <!-- 소속회사 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="company_code">소속회사</label>
-                        <select class="form-control" id="company_code" name="company_code">
-                            <option value="9">전체</option>
-                            <option value="0">자회사</option>
-                            <option value="1">협력사</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 부서명, 이름, 메일주소 UI 제공 -->
-            <div class="row">
-                <!-- 부서명 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="dept_name">부서명</label>
-                        <input type="text" id="dept_name" name="dept_name" class="form-control">
-                    </div>
-                </div>
-                <!-- 이름 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="admin_name">이름</label>
-                        <input type="text" id="admin_name" name="admin_name" class="form-control">
-                    </div>
-                </div>
-                <!-- 메일주소 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="email">메일주소</label>
-                        <input type="text" id="email" name="email" class="form-control">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 전화번호, 사용여부 UI 제공 -->
-            <div class="row">
-                <!-- 전화번호 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="telephone">전화번호</label>
-                        <input type="text" id="telephone" name="telephone" class="form-control">
-                    </div>
-                </div>
-                <!-- 사용여부 영역 -->
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="used_yn_code">사용 여부</label>
-                        <select class="form-control" id="used_yn_code" name="used_yn_code">
-                            <option value="9">선택</option>
-                            <option value="1">사용함</option>
-                            <option value="0">사용 안 함</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                </div>
-            </div>
-
-            
-            <!-- 저장, 목록 버튼 영역 -->
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">저장</button>
-                <a href="/admin/list" class="btn btn-info">목록</a>
-            </div>
+      <!-- 관리자 계정, 암호, 소속회사 UI 제공 -->
+      <div class="row">
+        <!-- 아이디 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">관리자 ID</label>
+            <input
+              type="text"
+              id="admin_id"
+              name="admin_id"
+              class="form-control"
+            />
+          </div>
         </div>
-    </form>
+        <!-- 비밀번호 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label">관리자 비밀번호</label>
+            <input
+              type="password"
+              id="admin_password"
+              name="admin_password"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- 소속회사 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="company_code">소속회사</label>
+            <select class="form-control" id="company_code" name="company_code">
+              <option value="9">전체</option>
+              <option value="0">자회사</option>
+              <option value="1">협력사</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 부서명, 이름, 메일주소 UI 제공 -->
+      <div class="row">
+        <!-- 부서명 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="dept_name">부서명</label>
+            <input
+              type="text"
+              id="dept_name"
+              name="dept_name"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- 이름 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="admin_name">이름</label>
+            <input
+              type="text"
+              id="admin_name"
+              name="admin_name"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- 메일주소 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="email">메일주소</label>
+            <input type="text" id="email" name="email" class="form-control" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 전화번호, 사용여부 UI 제공 -->
+      <div class="row">
+        <!-- 전화번호 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="telephone">전화번호</label>
+            <input
+              type="text"
+              id="telephone"
+              name="telephone"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- 사용여부 영역 -->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label class="control-label" for="used_yn_code">사용 여부</label>
+            <select class="form-control" id="used_yn_code" name="used_yn_code">
+              <option value="9">선택</option>
+              <option value="1">사용함</option>
+              <option value="0">사용 안 함</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-4"></div>
+      </div>
+
+      <!-- 저장, 목록 버튼 영역 -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">저장</button>
+        <a href="/admin/list" class="btn btn-info">목록</a>
+      </div>
+    </div>
+  </form>
 </div>
 
 <script></script>
