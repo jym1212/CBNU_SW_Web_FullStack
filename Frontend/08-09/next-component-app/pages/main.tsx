@@ -13,12 +13,16 @@ const inter = Inter({ subsets: ['latin'] });
 //interface 참조
 import { GuideProps, IGuide } from '@/interface/Main';
 
+import { useState } from 'react';
+
 //각종 재사용 컴포넌트 참조
 import Header from '@/components/header';
 import LogoContents from '@/components/logo-contents';
 import Guide from '@/components/guide';
 
 function Main() {
+  const [title, setTitle] = useState('Main Page');
+
   //next.js 로고 이미지 경로 데이터
   const logoPath = '/next.svg';
 
@@ -47,7 +51,7 @@ function Main() {
   ];
 
   //자식 컴포넌트에서 발생한 이벤트 처리 함수
-  const handleChildClick = (url: string) => {
+  const handleChildClick = (url: string): void => {
     console.log('이동할 URL 데이터 :', url);
   };
 
@@ -55,8 +59,14 @@ function Main() {
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
+      {/* useState 훅을 사용한 상태 관리 */}
+      <h1>{title}</h1>
+
       {/* 헤더 컴포넌트 영역 */}
-      <Header mainPage="pages/main.tsx" onClick={handleChildClick} />
+      {/* 부모에서 자식으로 데이터 전달 */}
+      <Header mainPage="pages/main.tsx" onClick={handleChildClick}>
+        Children Data
+      </Header>
 
       {/* 로고 컴포넌트 영역 */}
       <LogoContents logoPath={logoPath} />
