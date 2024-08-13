@@ -2,7 +2,7 @@
 // 회사 소개 페이지
 
 const Intro = () => {
-  return <div>Intro</div>;
+  return <div className="h-[700px]">Intro</div>;
 };
 
 export default Intro;
