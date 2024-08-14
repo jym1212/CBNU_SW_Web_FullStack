@@ -1,7 +1,6 @@
 //2024.08.14
 
 import Link from 'next/link';
-import { title } from 'process';
 
 //컴포넌트 내에서의 데이터 상태 관리를 위한 useState 훅 참조
 //현재 컴포넌트 생애주기(LifeCycle) 관리를 위한 useEffect 훅 참조
