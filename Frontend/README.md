@@ -27,19 +27,21 @@
 ### Next.js Advanced (Frontend)
 
 - 08.12 (16일차)
-
   - 함수형 State Component 실습 (userState Hook)
   - state 관리 실습 (props 관리, event handler 함수)
   - Todo-List 실습 (props 전달, component 분할, useState 사용)
-
 - 08.13 (17일차)
-
   - 파일 시스템 기반 라우팅 실습 (Page Routing)
   - 화면 재사용 Component 실습 (layout)
   - 템플릿을 활용하여 재사용 Component 프로젝트 실습 (layout, Page Routing)
-
 - 08.14 (18일차)
+
   - Component Life Cycle (Mounting) 관리 - useEffect 실습
   - Local state 관리 - useState 실습
   - state 관리 로직 재사용 - useReducer 실습
   - 전역 state 관리 - useContext (Context API) 실습
+
+- 08.16 (19일차)
+  - SPA(Sing Page Application) 개념
+  - React Rendering (CSR, SSR, SSG, ISR) 방식 개념 및 실습
+  - Final 중 next-platform-app 템플릿 구성
