@@ -12,6 +12,8 @@ var db = require("../models/index.js");
 /*
 전체 게시글 목록 조회 요청 및 응답처리 API 라우팅 메소드
 - 호출 주소 : http//localhost:5000/api/article/list
+- 요청 방식 : GET
+- 응답 결과 : 전체 게시글 목록 반환
 */
 router.get("/list", async (req, res, next) => {
   let apiResult = {
@@ -22,6 +24,37 @@ router.get("/list", async (req, res, next) => {
 
   try {
     const articles = await db.Article.findAll();
+
+    apiResult.code = 200;
+    apiResult.data = articles;
+    apiResult.msg = "OK";
+  } catch (err) {
+    apiResult.code = 500;
+    apiResult.data = null;
+    apiResult.msg = "Sever Error";
+  }
+
+  res.json(apiResult);
+});
+
+/*
+단일 게시글 목록 조회 요청 및 응답처리 API 라우팅 메소드
+- 호출 주소 : http//localhost:5000/api/article/1
+- 요청 방식 : GET
+- 응답 결과 : 단일 게시글 정보 반환
+*/
+router.get("/:id", async (req, res, next) => {
+  let apiResult = {
+    code: 400,
+    data: null,
+    msg: "",
+  };
+
+  try {
+    const articleId = req.params.id;
+    const articles = await db.Article.findOne({
+      where: { article_id: articleId },
+    });
 
     apiResult.code = 200;
     apiResult.data = articles;
