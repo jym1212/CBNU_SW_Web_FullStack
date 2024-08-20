@@ -51,7 +51,7 @@
 
 # 5주차 (8.19)
 
-### Next.js Advanced (Frontend)
+### Next.js Advanced (Backend, Frontend)
 
 - 08.19 (20일차)
   - next-platform-app(Frontend)랑 node-chat-app(Backend) 구현 및 연결
