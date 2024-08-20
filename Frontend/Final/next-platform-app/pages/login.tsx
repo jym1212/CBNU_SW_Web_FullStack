@@ -51,7 +51,7 @@ const Login = () => {
         //Step2 : 추후 Context API 전역 데이터로 사용자 정보 저장
 
         //Step3 : 메인 페이지 or 마이페이지로 이동
-        router.push('/main');
+        router.push('/');
       } else {
         if (result.code == 400 && result.msg == 'Not Exist Email') {
           alert('메일 주소가 존재하지 않습니다.');

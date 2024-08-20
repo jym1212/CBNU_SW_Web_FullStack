@@ -70,7 +70,7 @@ const Regist = () => {
         }
       }
     } catch (err) {
-      console.error('백엔드 REST API 호출 중 에러가 발생했습니다.');
+      console.error('백엔드 REST API 호출 중 에러 발생 :', err);
     }
   };
 
