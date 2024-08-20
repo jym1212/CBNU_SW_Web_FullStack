@@ -45,3 +45,16 @@
   - SPA(Sing Page Application) 개념
   - React Rendering (CSR, SSR, SSG, ISR) 방식 개념 및 실습
   - Final 중 next-platform-app 템플릿 구성
+  - Backend 중 node-chat-app과 연결하여 백엔드 구성
+
+<br/><br/>
+
+# 5주차 (8.19)
+
+### Next.js Advanced (Frontend)
+
+- 08.19 (20일차)
+  - next-platform-app(Frontend)랑 node-chat-app(Backend) 구현 및 연결
+  - next-platform-app의 회원가입 및 로그인 기능 구현
+  - next-platform-app의 게시글 등록, 목록(SSR, CSR 방식) 구현
+  - next-platform-app의 JWT 토큰을 사용한 사용자 로그인 인증 기능 구현 \*
