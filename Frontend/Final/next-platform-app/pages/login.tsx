@@ -3,15 +3,23 @@
 //호출 주소 : http://localhost:3003/login
 
 //화면 상에 데이터 관리를 위한 useState 훅 호출
-import { useState } from 'react';
+//전역 상태 데이터 관리를 위한 useContext 훅 호출
+import { useState, useContext } from 'react';
 
 //프론트엔드 라우팅 주소 이동 처리를 위한 useRouter() 훅 호출
 import { useRouter } from 'next/router';
+
+//전역 컨텍스트 참조
+import { GlobalContext } from '@/library/globalContext';
 
 //로그인 페이지 컴포넌트
 const Login = () => {
   //라우팅 객체 생성
   const router = useRouter();
+
+  //전역 상태값 변경을 위한 컨텍스트 객체 생성
+  //전역 상태값을 불러오거나 값을 변경할 수 있게 변수와 세터함수 참조
+  const { globalData, setGlobalData } = useContext(GlobalContext);
 
   //로그인 사용자 정보 상태 관리 데이터 정의 및 초기화
   const [member, setMember] = useState({
@@ -46,9 +54,12 @@ const Login = () => {
         console.log('로그인 성공');
 
         //Step1 : 백엔드에서 제공한 JWT 토큰값을 웹브라우저의 로컬스토리지에 저장
-        localStorage.setItem('token', result.token);
+        localStorage.setItem('token', result.data.token);
 
         //Step2 : 추후 Context API 전역 데이터로 사용자 정보 저장
+        //로그인 한 사용자 정보를 전역 상태의 member 속성값으로 저장
+        //setGlobalData(result.data);
+        setGlobalData(result.data.member);
 
         //Step3 : 메인 페이지 or 마이페이지로 이동
         router.push('/');
@@ -150,10 +161,10 @@ const Login = () => {
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}
             <a
-              href="#"
+              href="/regist"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Start a 14 day free trial
+              Regist now
             </a>
           </p>
         </div>

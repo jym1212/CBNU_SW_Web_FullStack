@@ -34,7 +34,7 @@ const BlogCreate = () => {
     //웹브라우저 로컬스토리지 저장소에서 로그인 사용자 JWT 토큰 조회
     const token = localStorage.getItem('token');
 
-    //axios나 fetch() 함수를 통해 백엔드 RESTful API 호출
+    //axios 또는 fetch()를 통해 백엔드 RESTful API를 호출
     try {
       //case1 : axios를 이용한 데이터 처리
       //axios.post('API 주소', 전달할 데이터);
@@ -79,7 +79,7 @@ const BlogCreate = () => {
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            신규 게시글
+            신규 게시글 등록
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             신규 게시글을 작성합니다.

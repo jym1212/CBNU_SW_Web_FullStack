@@ -1,4 +1,9 @@
+//2024.08.21
 //메인 페이지 컴포넌트
+
+import { useState, useContext } from 'react';
+import { GlobalContext } from '@/library/globalContext';
+import { IGlobalData, ILoginMember } from '@/interfaces/global';
 
 const callouts = [
   {
@@ -30,6 +35,8 @@ const callouts = [
 ];
 
 const Home = () => {
+  const { globalData, setGlobalData } = useContext(GlobalContext);
+
   return (
     <>
       {/* 메인 상단 컨텐츠 영역  */}
@@ -67,11 +74,12 @@ const Home = () => {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                href="/login"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
               </a>
+
               <a
                 href="#"
                 className="text-sm font-semibold leading-6 text-gray-900"

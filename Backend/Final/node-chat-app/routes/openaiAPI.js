@@ -56,19 +56,27 @@ router.post("/dalle", async (req, res, next) => {
 
       //url : openai 사이트에 생성된 이미지 전체 주소 경로 반환
       //b64_json : 바이너리 데이터 형식으로 이미지 반환
-      response_format: "url",
+      response_format: "b64_json",
     });
 
     //Step3 : Dalle API 호출 결과에서 물리적 이미지 생성 후, 서버 공간에 저장
     //url 방식으로 이미지 생성 값을 반환받는 경우, 1시간 이후 OpenAI 이미지 서버에 해당 이미지 삭제
     //해당 이미지가 영구적으로 필요하면, 반환된 url 주소를 이용해 백엔드에 생성
-    const imageURL = response.data[0].url;
+    //const imageURL = response.data[0].url;
 
     //이미지 경로를 이용해 물리적 이미지 파일 생성
     const imgFileName = `sample-${Date.now()}.png`;
     const imgFilePath = `./public/ai/${imgFileName}`; //로컬 이미지 저장 위치
 
-    axios({
+    //이미지 생성 요청에 대한 응답 값으로 이미지 바이너리 데이터로 반환 후,
+    //서버에 이미지 파일 생성
+    const imageBinaryData = response.data[0].b64_json;
+    console.log("이미지 바이너리 데이터 정보 :", imageBinaryData);
+
+    const buffer = Buffer.from(imageBinaryData, "base64");
+    fs.writeFileSync(imgFilePath, buffer);
+
+    /* axios({
       url: imageURL,
       responseType: "stream",
     })
@@ -84,7 +92,7 @@ router.post("/dalle", async (req, res, next) => {
       })
       .catch((err) => {
         console.error("Error downloading image:", err);
-      });
+      }); */
 
     // Step4: 최종 생성도니 이미지 데이터 추출
     const article = {
@@ -201,10 +209,32 @@ router.get("/gpt", async (req, res, next) => {
   };
 
   try {
-    // Step1: 프론트엔드에서 사용자 질문 프롬프트 추출
-    // Step2: ChatGPT API 호출
-    // Step3: ChatGPT 응답 메시지 추출
-    // Step4: 프론트엔드에 ChatGPT 응답 메시지 반환
+    //Step1: 프론트엔드에서 사용자 질문 프롬프트 추출
+    const prompt = req.body.message;
+
+    //Step2: ChatGPT API 호출
+    //서버와 gpt는 실시간 연결이 아니라, RESTful API와 통신하여 요청과 응답 처리
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4o", // 지원 LLM 모델 : gpt-4o-mini, gpt-4o, gpt-4, gpt-3.5-turbo
+        message: [{ role: "user", content: prompt }],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    //Step3: ChatGPT 응답 메시지 추출
+    const gptMessage = resonse.data.choices[0].message[0].content;
+
+    //Step4: 프론트엔드에 ChatGPT 응답 메시지 반환
+    apiResult.code = 200;
+    apiResult.data = gptMessage;
+    apiResult.msg = "OK";
   } catch (err) {
     apiResult.code = 500;
     apiResult.data = null;

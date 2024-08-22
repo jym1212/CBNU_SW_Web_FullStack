@@ -32,6 +32,9 @@ var articleAPIRouter = require("./routes/articleAPI");
 //Open AI 관리 RESTful API 라우터 참조
 var openAPIRouter = require("./routes/openaiAPI");
 
+//채널 관리 RESTful API 라우터 참조
+var channelAPIRouter = require("./routes/channelAPI");
+
 var app = express();
 
 //MySQL과 자동 연결 처리, 모델 기반 물리 테이블 생성 처리 제공
@@ -69,6 +72,9 @@ app.use("/api/article", articleAPIRouter);
 
 //openAPIRouter 기본 호출 주소 체계 정의
 app.use("/api/openai", openAPIRouter);
+
+//channelAPIRouter 기본 호출 주소 체계 정의
+app.use("/api/channel", channelAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
