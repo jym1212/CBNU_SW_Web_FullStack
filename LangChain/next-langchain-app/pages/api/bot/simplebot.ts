@@ -107,7 +107,7 @@ export default async function handler(
       const resultMsg: IMessage = {
         user_type: UserType.BOT,
         message: resultMessage,
-        send_date: Date.now().toString(),
+        send_date: new Date(),
       };
 
       //Step4 : API 호출 결과 설정

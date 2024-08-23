@@ -4,7 +4,7 @@
 export interface IMessage {
   user_type: UserType;
   message: string;
-  send_date: string;
+  send_date: Date;
 }
 
 export enum UserType {

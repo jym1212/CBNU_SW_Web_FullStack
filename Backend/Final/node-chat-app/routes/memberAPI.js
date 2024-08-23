@@ -158,16 +158,15 @@ router.post("/login", async (req, res, next) => {
 
         //Step6 : JWT Token 문자열을 프론트엔드에 반환
         apiResult.code = 200;
-        apiResult.data = tokenJsonData;
-        /* apiResult.data = {
+        //apiResult.data = token;
+        apiResult.data = {
           token: token,
           member: {
-            member_id: tokenJsonData,
-            member_id,
+            member_id: tokenJsonData.member_id,
             email: tokenJsonData.email,
             name: tokenJsonData.name,
           },
-        }; */
+        };
         apiResult.msg = "Ok";
       } else {
         //비밀번호가 틀린 경우, 프론트엔드로 결과값 바로 반환

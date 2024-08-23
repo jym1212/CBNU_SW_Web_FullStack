@@ -125,7 +125,7 @@ router.post("/dalle", async (req, res, next) => {
     };
 
     // Step5: DB 게시글 테이블에 사용자 이미지 생성요청 정보 등록처리
-    const registedFile = await db.Article_file.create(articleFile);
+    const registedFile = await db.ArticleFile.create(articleFile);
 
     // Step6: 최종 생성된 이미지 정보를 프론트엔드로 반환
     apiResult.code = 200;

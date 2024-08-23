@@ -21,7 +21,7 @@ const SimpleBot = () => {
     const userMessage: IMessage = {
       user_type: UserType.USER,
       message: message,
-      send_date: Date.now().toString(),
+      send_date: new Date(),
     };
 
     //백엔드로 사용자 입력메세지를 전송하기 전에 사용자 메세지를

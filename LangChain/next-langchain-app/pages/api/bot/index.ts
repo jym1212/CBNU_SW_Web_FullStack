@@ -1,5 +1,5 @@
-//2024.08.21
-//기본 호출 주소 : http://localhost:3000/api/bot/translatebot (Backend)
+//2024.08.23
+//기본 호출 주소 : http://localhost:3000/api/bot/ (Backend)
 //라우팅 주소는 /api 폴더 아래 물리적 폴더명과 파일명으로 라우팅 주소가 설정됨.
 
 //NextApiRequest 타입 : 웹브라우저에서 서버로 전달되는 각종 정보를 추출하는 HTTPRequest 객체 (req)
@@ -45,7 +45,6 @@ export default async function handler(
     //클라이언트에서 POST 방식으로 요청해오는 경우 처리
     if (req.method === 'POST') {
       //Step1 : 프론트엔드에서 사용자 프롬포트 추출
-      const role = req.body.role;
       const prompt = req.body.message;
 
       //Step2 : LLM 모델 생성
@@ -55,33 +54,13 @@ export default async function handler(
       });
 
       //Step3 : OpenAI llm 모델 기반 질의응답 처리
-      //case1 : ChatPromptTemplate 객체를 이용하여 llm 연동 (ChatPromptTemplate)
-      //ChatPromptTemplate 객체를 이용하여 llm 연동(ChatPromptTemplate)
-      //프롬포트 템플릿 : LLM에게 전달할 수 있는 다양한 질문 템플릿을 제공하여
-      //보다 효율적인 질문형식을 만들어 LLM에게 제공해 좋은 답변을 만들기 위한 방식 제공
-      /*  const promptTemplate = ChatPromptTemplate.fromMessages([
-        ['system', role],
-        ['user', '{ input }'],
-      ]);
-
-      //template.pipe(LLM 모델) : chain 객체 반환 (chain은 처리할 작업의 기본 단위)
-      //LangChain : chain(처리할 작업)을 여러 개 생성하고, chain을 연결하여 로직을 구현하는 방식
-      const chain = promptTemplate.pipe(llm);
-      const result = await chain.invoke({ input: prompt }); */
-
-      //case2 : SystemMessage, HumanMessage 객체를 이용하여 llm 연동
-      const messages = [new SystemMessage(role), new HumanMessage(prompt)];
-      //const result = await llm.invoke(messages);
-
-      //case3 : StringOutputParser 객체를 이용하여 llm 연동
-      const parser = new StringOutputParser();
-      const chain = llm.pipe(parser);
-      const resultMessage = await chain.invoke(messages);
+      //case1 : llm 연동
+      const result = await llm.invoke(prompt);
 
       //메세지 처리 결과 데이터
       const resultMsg: IMessage = {
         user_type: UserType.BOT,
-        message: resultMessage,
+        message: result.content as string,
         send_date: new Date(),
       };
 
