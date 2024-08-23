@@ -1,13 +1,13 @@
 //2024.08.23
-//닉네임 기반 챗봇 구현 (Frontend)
-//호출 주소 : http://localhost:3000/bot
+//임베딩 기반 챗봇 구현 (Frontend)
+//호출 주소 : http://localhost:3000/pagebot
 
 import React, { useState } from 'react';
 import moment from 'moment';
 
-import { IMessage, IMemberMessage, UserType } from '@/interfaces/message';
+import { IMemberMessage, UserType } from '@/interfaces/message';
 
-const Bot = () => {
+const PageBot = () => {
   //사용자 대화 닉네임 상태값 정의
   const [nickName, setNickName] = useState<string>('');
 
@@ -15,7 +15,7 @@ const Bot = () => {
   const [message, setMessage] = useState<string>('');
 
   //챗봇 채팅 이력 상태값 목록 정의 및 초기화
-  const [messageList, setMessageList] = useState<IMessage[]>([]);
+  const [messageList, setMessageList] = useState<IMemberMessage[]>([]);
 
   //메세지 전송 버튼 클릭 시, 메세지 백엔드 API 전송 처리 함수
   const messageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +34,7 @@ const Bot = () => {
     //-> 현재 WebSocket 기반 실시간 통신이 아니기 때문에 백엔드에서 2번 응답을 받아올 수 없음.
     setMessageList((prev) => [...prev, userMessage]);
 
-    const response = await fetch('/api/bot', {
+    const response = await fetch('/api/agent/pagebot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -180,4 +180,4 @@ const Bot = () => {
   );
 };
 
-export default Bot;
+export default PageBot;

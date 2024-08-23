@@ -13,7 +13,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 //프론트엔드로 반환할 메세지 데이터 타입 참조
-import { IMessage, IMemberMessage, UserType } from '@/interfaces/message';
+import { IMemberMessage, UserType } from '@/interfaces/message';
 
 //OpenAI LLM 서비스 객체 참조
 import { ChatOpenAI } from '@langchain/openai';
@@ -41,7 +41,7 @@ import {
 //서버에서 웹브라우저로 반환하는 처리 결과 데이터 타입
 type ResponseData = {
   code: number;
-  data: string | null | IMessage;
+  data: string | null | IMemberMessage;
   msg: string;
 };
 
@@ -119,10 +119,22 @@ export default async function handler(
 
       //대화 이력 관리 기반 챗봇 LLM 호출
       //historyChain.invoke({input : 사용자 입력 프롬포트}, config : 사용자 세션 아이디)
+
+      //case1 : 한 번에 LLM 응답 메세지 수신
       const resultMessage = await historyChain.invoke(
         { input: prompt },
         config,
       );
+
+      //case2 : LLM 응답 메세지 스트림 방식으로 전달
+      //LLM에서 전달된 응답메세지 문자열을 잘라서 순차적으로 전송
+      /* const stream = await historyChain.stream({ input: prompt }, config);
+      let resultMessage = '';
+
+      for await (const chunk of stream) {
+        console.log('|', chunk);
+        resultMessage += chunk;
+      } */
 
       //메세지 처리 결과 데이터
       const resultMsg: IMemberMessage = {

@@ -1,5 +1,5 @@
 //2024.08.22
-//번역 페이지 컴포넌트 (Frontend)
+//역할 지정 챗봇 구현 (Frontend)
 //호출 주소 : http://localhost:3000/translatebot
 
 import React, { useState } from 'react';

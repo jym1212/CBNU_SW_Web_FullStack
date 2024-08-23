@@ -1,5 +1,5 @@
 //2024.08.22
-//채팅 페이지 컴포넌트 (Frontend)
+//채팅 봇 구현 (Frontend)
 //호출 주소 : http://localhost:3000/simplebot
 
 import React, { useState } from 'react';
