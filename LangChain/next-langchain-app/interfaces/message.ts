@@ -16,3 +16,7 @@ export interface ISendMessage {
   message: string;
   role: string;
 }
+
+export interface IMemberMessage extends IMessage {
+  nick_name: string;
+}
