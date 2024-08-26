@@ -1,16 +1,16 @@
 //2024.08.26
-//gemini 기반 챗봇 구현 (Backend)
-//기본 호출 주소 : http://localhost:3000/api/geminibot
-
-//gemini를 사용하기 위한 설치
-//npm install @langchain/google-genai
+//챗봇 구현 (Backend)
+//기본 호출 주소 : http://localhost:3000/api/mixbot
 
 //NextApiRequest 타입 : 웹브라우저에서 서버로 전달되는 각종 정보를 추출하는 HTTPRequest 객체 (req)
 //NextApiResponse 타입 : 서버에서 웹브라우저로 전달되는 각종 정보를 추출하는 HTTPResponse 객체 (res)
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 //프론트엔드로 반환할 메세지 데이터 타입 참조
-import { IMemberMessage, UserType } from '@/interfaces/message';
+import { BotType, IMemberMessage, UserType } from '@/interfaces/message';
+
+//OpenAI LLM 서비스 객체 참조
+import { ChatOpenAI } from '@langchain/openai';
 
 //Google Gemini LLM 객체 참조
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
@@ -49,31 +49,38 @@ export default async function handler(
       //Step1 : 프론트엔드에서 사용자 프롬포트 추출
       const nick_name = req.body.nickName;
       const message = req.body.message;
+      const botType = req.body.botType;
+
+      let resultMessage = '';
 
       //Step2 : LLM 모델 생성
-      const geminiLLM = new ChatGoogleGenerativeAI({
-        modelName: 'gemini-pro',
-        maxOutputTokens: 2048,
-      });
+      if (botType == BotType.LLMGPT) {
+        const llm = new ChatOpenAI({
+          modelName: 'gpt-4o',
+          apiKey: process.env.OPENAI_API_KEY,
+        });
 
-      //Case1 : Simple Gemini 챗봇 실행
-      /* const response = await geminiLLM.invoke(message);
-      console.log('Gemini 챗봇 응답 :', response); */
+        const response = await llm.invoke(message);
+        console.log('Gemini 챗봇 응답 :', response);
 
-      //Case2 : 프롬포트 템플릿과 OutputParser 적용
-      const prompt = ChatPromptTemplate.fromMessages([
-        ['system', '당신은 세계적으로 유명한 여행 작가입니다.'],
-        ['user', '{input}'],
-      ]);
-      const outputParser = new StringOutputParser();
+        const resultMessage = response.content as string;
+      }
 
-      const chain = prompt.pipe(geminiLLM).pipe(outputParser);
-      const resultMssage = await chain.invoke({ input: message });
+      if (botType == BotType.LLMGEMINI) {
+        const llm = new ChatGoogleGenerativeAI({
+          modelName: 'gemini-pro',
+          maxOutputTokens: 2048,
+        });
+        const response = await llm.invoke(message);
+        console.log('Gemini 챗봇 응답 :', response);
+
+        const resultMessage = response.content as string;
+      }
 
       //메세지 처리 결과 데이터
       const resultMsg: IMemberMessage = {
         user_type: UserType.BOT,
-        message: resultMssage,
+        message: resultMessage,
         send_date: new Date(),
         nick_name: 'bot',
       };

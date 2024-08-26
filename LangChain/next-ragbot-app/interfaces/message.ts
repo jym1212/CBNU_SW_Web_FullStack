@@ -8,8 +8,15 @@ export interface IMessage {
 }
 
 export enum UserType {
-  USER = "User",
-  BOT = "Bot",
+  USER = 'User',
+  BOT = 'Bot',
+}
+
+export enum BotType {
+  LLMGPT = 'LLMGPT',
+  LLMGEMINI = 'LLMGEMINI',
+  RAGDOC = 'RAGDOC',
+  RAGWEB = 'RAGWEB',
 }
 
 export interface ISendMessage {
