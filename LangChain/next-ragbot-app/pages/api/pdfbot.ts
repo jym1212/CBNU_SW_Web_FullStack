@@ -1,7 +1,6 @@
-//2024.08.23
-//기본 호출 주소 : http://localhost:3000/api/pdfbot (Backend)
-
-//PDF 파일 기반 챗봇 구현
+//2024.08.26
+//RAG 기반 PDF 파일 요약 챗봇 구현 (Backend)
+//기본 호출 주소 : http://localhost:3000/api/pdfbot
 
 //NextApiRequest 타입 : 웹브라우저에서 서버로 전달되는 각종 정보를 추출하는 HTTPRequest 객체 (req)
 //NextApiResponse 타입 : 서버에서 웹브라우저로 전달되는 각종 정보를 추출하는 HTTPResponse 객체 (res)
@@ -22,10 +21,10 @@ import { ChatOpenAI } from '@langchain/openai';
 //텍스트 스플리터 객체 참조
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 
-//프롬포트 템플릿 참조
+//LLM 응답 메세지 타입을 원하는 타입 결과물로 파싱해주는 OutputParser 객체 참조
 import { StringOutputParser } from '@langchain/core/output_parsers';
 
-//LLM 응답 메세지 타입을 원하는 타입 결과물로 파싱해주는 OutputParser 객체 참조
+//프롬포트 템플릿 참조
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 
 //임베딩 처리를 위한 OpenAI Embedding  객체 참조

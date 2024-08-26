@@ -1,13 +1,13 @@
 //2024.08.26
-//RAG 기반 PDF 파일 요약 챗봇 구현 (Frontend)
-//호출 주소 : http://localhost:3000/pdfbot
+//RAG 기반 QNA 챗봇 구현 (Frontend)
+//호출 주소 : http://localhost:3000/qnabot
 
-import React, { useState } from 'react';
-import moment from 'moment';
-
+import { useState } from 'react';
 import { IMemberMessage, UserType } from '@/interfaces/message';
 
-const PdfBot = () => {
+import moment from 'moment';
+
+const QnaBot = () => {
   //사용자 대화 닉네임 상태값 정의
   const [nickName, setNickName] = useState<string>('yumyum');
 
@@ -34,7 +34,7 @@ const PdfBot = () => {
     //-> 현재 WebSocket 기반 실시간 통신이 아니기 때문에 백엔드에서 2번 응답을 받아올 수 없음.
     setMessageList((prev) => [...prev, userMessage]);
 
-    const response = await fetch('/api/pdfbot', {
+    const response = await fetch('/api/qnabot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -180,4 +180,4 @@ const PdfBot = () => {
   );
 };
 
-export default PdfBot;
+export default QnaBot;
