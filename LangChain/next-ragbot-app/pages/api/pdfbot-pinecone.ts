@@ -1,8 +1,17 @@
 //2024.08.26
 //RAG 기반 PDF 파일 요약 챗봇 구현 (Backend)
-//기본 호출 주소 : http://localhost:3000/api/pdfbot
+//PDF 파일 PineCone Cloud Vector DB 기반 구현
+//기본 호출 주소 : http://localhost:3000/api/pdfbot-pinecone
 
 //PDF 파일 내 텍스트 추출을 위한 npm i pdf-parse 설치
+
+//LangSmith 사이트 : https://www.langchain.com/langsmith
+//LangSmith와 연동하여 project monitoring 가능
+
+//pinecone DB 사용하기 위한 설치
+//pincone 사이트 : https://www.pinecone.io/
+//npm install @langchain/pinecone
+//npm install @pinecone-database/pinecone
 
 //NextApiRequest 타입 : 웹브라우저에서 서버로 전달되는 각종 정보를 추출하는 HTTPRequest 객체 (req)
 //NextApiResponse 타입 : 서버에서 웹브라우저로 전달되는 각종 정보를 추출하는 HTTPResponse 객체 (res)
@@ -30,19 +39,17 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 
 //임베딩 처리를 위한 OpenAI Embedding  객체 참조
-//임베딩 : 문장 내 단어를 벡터 수치화하는 과정
 import { OpenAIEmbeddings } from '@langchain/openai';
 
-//수치화된 벡터 데이터 저장할 메모리형 벡터 저장소 객체 참조
-import { MemoryVectorStore } from 'langchain/vectorstores/memory';
+//PineCone 클라우드 벡터 DB 연결 객체 참조
+import { PineconeStore } from '@langchain/pinecone';
+import { Pinecone as PineconeClient } from '@pinecone-database/pinecone';
+
+//rag chain, LLM 생성을 위한 모듈 참조
+import { pull } from 'langchain/hub';
 
 //LLM 모델에 RAG 기반 체인 생성 클래스 참조
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
-
-//rag chain, LLM 생성을 위한 모듈 참조
-//LangChain Hub : 일종의 오픈소스 저장소와 같이 langchain에 특하된 각종 RAG 전용 프롬포트 테믈릿 제공
-//각종 RAG 전용 프롬포트 템플릿들이 제공되며,  HUB와 통신하기 위해 pull 객체 참조
-import { pull } from 'langchain/hub';
 
 //서버에서 웹브라우저로 반환하는 처리 결과 데이터 타입
 type ResponseData = {
@@ -96,13 +103,25 @@ export default async function handler(
       //pdf document를 지정한 splitter로 단어 단위 쪼갠 (ChunkData) 데이터로 변환
       const splitDocs = await splitter.splitDocuments(docs);
 
-      //Step3-3 : Splitting된 문서 내 단어를 임베딩(벡터화 처리)해서 메모리 벡터 저장소에 저장
-      //MemoryVectorStore.fromDocuments('임베딩된 문서', 사용할 임베딩 모델 처리기);
+      //Step3-3 : Splitting된 문서 내 단어를 임베딩(벡터화 처리)해서 pinecone 벡터 저장소에 저장
       //지정한 임베딩 모델을 통해 chunk data를 개별 vector로 수치화
-      //수치화된 데이터를 지정한 vector 전용 저장소에 저장
-      const vectorStore = await MemoryVectorStore.fromDocuments(
-        docs,
-        new OpenAIEmbeddings(),
+      //지정한 Cloud Pinecone Vector Index 전용 저장소에 저장
+      //사용할 임베딩 모델 객체 생성
+      const embeddingModel = new OpenAIEmbeddings({
+        model: 'text-embedding-3-small',
+      });
+
+      //pinecone vector 테이블(인덱스) 지정
+      const pinecone = new PineconeClient();
+      const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX!);
+
+      //chunk 데이터를 pinecone 지정 Index에 벡터 수치화하여 저장
+      const vectorStore = await PineconeStore.fromDocuments(
+        splitDocs,
+        embeddingModel,
+        {
+          pineconeIndex: pineconeIndex,
+        },
       );
 
       //Step4 : Query를 통해 벡터 저장소에서 사용자 질문과 관련된 검색 결과 조회
